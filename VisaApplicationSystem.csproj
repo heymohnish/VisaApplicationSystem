@@ -177,7 +177,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomCSS\ContactUs.css" />
     <Content Include="Content\CustomCSS\HomePage.css" />
+    <Content Include="Content\CustomCSS\LayoutVCO.css" />
     <Content Include="Content\CustomCSS\Registration.css" />
     <Content Include="Content\CustomCSS\SignUp.css" />
     <Content Include="Content\CustomCSS\TableView.css" />
@@ -209,7 +211,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Log\error.log" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\CustomScript\contactus.js" />
+    <Content Include="Scripts\CustomScript\ContactusValidation.js" />
     <Content Include="Scripts\CustomScript\CountryDropDown.js" />
     <Content Include="Scripts\CustomScript\Registration.js" />
     <Content Include="Scripts\CustomScript\SignUp.js" />

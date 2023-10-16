@@ -1,0 +1,55 @@
+﻿/* Define a CSS class for the icons */
+.icon {
+    margin-right: 8px; /* Adjust the spacing between the icon and text */
+}
+
+/* Basic styling for the vertical navigation bar */
+.vertical-nav {
+    background-color: #adcdff;
+    width: 250px; /* Adjust the width as needed */
+    height: 100%; /* Adjust the height as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+    /* Style for the navigation links */
+    .vertical-nav ul {
+        list-style-type: none;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .vertical-nav li {
+        margin-bottom: 10px;
+    }
+
+    .vertical-nav a {
+        display: block;
+        font-style: normal;
+        color: #000000;
+        text-decoration: none;
+        font-size: 17px;
+        padding: 10px;
+    }
+
+        .vertical-nav a:hover {
+            font-style: normal;
+            background-color: #218cff;
+            color: #ffffff;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+.home-link {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.content {
+    margin-left: 270px;
+    padding: 20px;
+}

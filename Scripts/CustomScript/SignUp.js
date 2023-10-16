@@ -34,46 +34,20 @@ function calculateAge() {
 
 }
 // EMAIL
+function onBlurEmail12() {
+    var emailInput = document.getElementById("email");
+    var errorEmail = document.getElementById("errorMail");
+    var emailValue = emailInput.value;
 
-//
-function onBlurEmail() {
-    var emailInput = document.getElementById("emailInput");
-    var inputFieldEmail = document.getElementById("emailInput");
-    var trimmedStr = emailInput.trim();
-    console.log(emailInput + " " + trimmedStr);
-    var bool = true;
-    var emailPattern = /^[a-zA-Z0-9._-]+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (trimmedStr != emailInput) {
-        errorMail.innerHTML = "Email contain space ";
-        bool = false;
+    // Regular expression for email validation
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (emailValue === "") {
+        errorEmail.innerHTML = "Email is required.";
+    } else if (!emailPattern.test(emailValue)) {
+        errorEmail.innerHTML = "Invalid email format.";
     } else {
-        errorMail.innerHTML = "";
-    }
-    if (emailInput === '') {
-        errorMail.innerHTML = "Email should be filled ";
-        inputFieldEmail.style.borderColor = "red";
-    } else {
-        if (bool == true) {
-            checkValidMail(emailPattern, emailInput);
-        }
-        else {
-            if (bool == false) {
-                inputFieldEmail.style.borderColor = "red";
-            } else {
-                inputFieldEmail.style.borderColor = "green";
-            }
-        }
-    }
-    inputFieldEmail.style.borderWidth = "3px";
-}
-function checkValidMail(emailPattern, emailInput) {
-    var inputFieldEmail = document.getElementById("email");
-    if (!emailPattern.test(emailInput)) {
-        errorMail.innerHTML = "Enter valid email";
-        inputFieldEmail.style.borderColor = "red";
-    } else {
-        inputFieldEmail.style.borderColor = "green";
-        errorMail.innerHTML = "";
+        errorEmail.innerHTML = ""; // Clear any previous error message.
     }
 }
 
