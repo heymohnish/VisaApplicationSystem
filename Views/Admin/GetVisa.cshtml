@@ -1,0 +1,77 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.Visa>
+
+@{
+    ViewBag.Title = "GetVisa";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Get all visa</h2>
+                @Html.ActionLink("Create New", "CreateVisa", null, new { @class = "btn btn-pri" })
+
+            
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Created admin
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    @* <th>
+                            View
+                        </th>*@
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.visaName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.visaTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.visaDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.adminID)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.visaID }, new { @class = "btn btn-pri" })
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Details", "Details", new { id = item.visaID }, new { @class = "btn btn-info" })
+                            </td>*@
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.visaID }, new { @class = "btn btn-dan" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</body>
+</html>

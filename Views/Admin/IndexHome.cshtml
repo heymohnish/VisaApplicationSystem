@@ -1,0 +1,30 @@
+﻿@model VisaApplicationSystem.Models.Registration
+
+@{
+    ViewBag.Title = "IndexHome";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+    Model.registrationID = Model.registrationID;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="~/Content/CustomCSS/HomePage.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <header>
+        <h1>Welcome Admin</h1>
+    </header>
+    <div id="main-content">
+        <img src="~/Content/Image/Home/pexels-aksonsat-uanthoeng-1078850.jpg" alt="A beautiful image" />
+        @*<p>Hello VCO .</p>*@
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+﻿@model VisaApplicationSystem.Models.Registration
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/ce19876732.js" crossorigin="anonymous"></script>
+    <link href="~/Content/CustomCSS/SignUp.css" rel="stylesheet" />
+  
+</head>
+<body>
+    <div class="center-fieldset">
+        <div id="para2">
+            <fieldset class="center-fieldset">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <form>
+                        <h4>Sign up</h4>
+                        <input type="text" id="fname" name="firstName" onblur="onBlurName()" placeholder="First name*"><br>
+                        <div id="errorName">
+                            @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <input type="text" id="lname" name="lastName" onblur="onBlurNameLast()" placeholder="Last name*"><br>
+                        <div id="errorLname">
+                            @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <input type="date" id="DOB" name="dob" placeholder="Date of Birth*" onclick="setMinDate()" onblur="calculateAge()">
+                        <input type="number" id="age" name="age" placeholder="Age*" readonly><br>
+                        <div id="errorAge">
+                            @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+                        </div><br>
+
+                        Gender*:
+                        <input type="radio" id="m" name="gender" value="male">
+                        <label for="m">Male</label>
+                        <input type="radio" id="f" name="gender" value="female">
+                        <label for="f">Female</label>
+                        <input type="radio" id="o" name="gender" value="other">
+                        <label for="o">Other</label><br><br>
+
+                        <input type="number" id="phone" name="phone" placeholder="Phone*" maxlength="10" pattern="[0-9]+" onblur="validPhone(this)"><br>
+                        <div id="errorPhone">
+                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                        </div>
+
+                        <input type="text" id="email" name="email" placeholder="Email*" onblur="onBlurEmail()"><br>
+                        <div id="errorMail">
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <input type="text" id="address" name="address" placeholder="Address*" onblur="onBlurMessage(this)" onkeydown="onKeyMessage(this)"><br>
+                        <div id="errorMessage">
+                            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                        </div>
+                        @*Country*@
+                        @Html.DropDownListFor(model => model.country, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select Country", new { @class = "form-control", id = "countryDropdown" })
+                        @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+                        @*State*@
+                        @Html.DropDownListFor(model => model.state, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select State", new { @class = "form-control", id = "stateDropdown" })
+                        @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                        @*City*@
+                        @Html.DropDownListFor(model => model.city, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select City", new { @class = "form-control", id = "cityDropdown" })
+                        @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                        <input type="text" id="username" name="username" placeholder="Username*" onblur="onBlurUser1()"><br>
+                        <div id="errorUserName">
+                            @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                        </div>
+                        <input type="password" id="password" name="password" placeholder="Password*" onblur="validatePassword()"><br>
+                        <div id="errorPassword">
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <input type="password" id="repassword" name="repassword" placeholder="Confirm Password*" onblur="checkRepass()"><br>
+                        <div id="errorrePassword"></div>
+                        <div style="padding-left:100px;">
+                            <a class="form-control-lg col-md-10" href="Login"
+                               target="_blank" style="font-size:smaller;">Already have an account?</a><br><br>
+                        </div>
+
+
+                        <input type="submit" value="Signup" name="Signup" placeholder="Sign up" onclick="validateEmail()">
+
+                    </form>
+                }
+            </fieldset>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="~/Scripts/CustomScript/CountryDropDown.js"></script>
+        <script src="~/Scripts/CustomScript/SignUp.js"></script>
+        <script src="~/Scripts/CustomScript/Validation.js"></script>
+        <script>
+                    $(document).ready(function () {
+            var stateDropdown = $("#countryDropdown");
+            $.ajax({
+                url: "@Url.Action("GetCountry", "Form")", type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Populate the dropdown with the fetched states
+                    $.each(data, function (index, item) {
+                        stateDropdown.append($('<option>', {
+                            value: item,
+                            text: item
+                        }));
+                    });
+                }
+            });
+        });
+        $(document).ready(function () {
+            var stateDropdown = $("#stateDropdown");
+            var countryDropdown = $("#countryDropdown");
+            countryDropdown.change(function () {
+                var selectedCountry = countryDropdown.val();
+                $.ajax({
+                    url: "@Url.Action("GetStates", "Form")",
+                    type: "GET",
+                    dataType: "json",
+                    data: { country: selectedCountry },
+                    success: function (data) {
+                        stateDropdown.empty();
+                        stateDropdown.append($('<option>', {
+                            value: "",
+                            text: "Select State"
+                        }));
+                        $.each(data, function (index, item) {
+                            stateDropdown.append($('<option>', {
+                                value: item,
+                                text: item
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            var cityDropdown = $("#cityDropdown");
+            var stateDropdown = $("#stateDropdown");
+            stateDropdown.change(function () {
+                var selectedState = stateDropdown.val();
+                $.ajax({
+                    url: "@Url.Action("GetCities", "Form")",
+                    type: "GET",
+                    dataType: "json",
+                    data: { state: selectedState },
+                    success: function (data) {
+                        // Clear existing options in the city dropdown
+                        cityDropdown.empty();
+                        cityDropdown.append($('<option>', {
+                            value: "",
+                            text: "Select City"
+                        }));
+                        // Populate the dropdown with the fetched cities
+                        $.each(data, function (index, item) {
+                            cityDropdown.append($('<option>', {
+                                value: item,
+                                text: item
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+        var userNameInput = $("#username"); // Corrected the ID
+            var userNameValidationMessage = $("#errorUserName"); // Corrected the ID
+
+            userNameInput.on('keyup', function () { // Changed 'keyup' to 'focusout'
+            var userName = userNameInput.val();
+            if (userName !== "") {
+                $.ajax({
+                    url: "@Url.Action("CheckUserNameExists", "Form")",
+                    type: "POST",
+                    data: { userName: userName },
+                    success: function (result) {
+                        if (result) {
+                            userNameValidationMessage.text("Username already exists.");
+                        } else {
+                            userNameValidationMessage.text("");
+                        }
+                    }
+                });
+            }
+        });
+        });
+    $(document).ready(function () {
+        var userNameInput = $("#email"); // Corrected the ID
+        var userNameValidationMessage = $("#errorMail"); // Corrected the ID
+
+            userNameInput.on('keyup', function () { // Changed 'keyup' to 'focusout'
+            var userName = userNameInput.val();
+            if (userName !== "") {
+                $.ajax({
+                    url: "@Url.Action("CheckEmailExists", "Form")",
+                    type: "POST",
+                    data: { userName: userName },
+                    success: function (result) {
+                        if (result) {
+                            userNameValidationMessage.text("Email already exists.");
+                        } else {
+                            userNameValidationMessage.text("");
+                        }
+                    }
+                });
+            }
+        });
+    });
+        </script>
+    </div>
+</body>
+</html>
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Registration</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.firstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.firstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.lastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.lastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.dob, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dob, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.dob, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.age, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.userName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@

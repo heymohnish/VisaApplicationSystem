@@ -1,0 +1,144 @@
+﻿@model VisaApplicationSystem.Models.Login
+
+
+@{
+    ViewBag.Title = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+        function validateField(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger");
+            if (value === '') {
+                errorSpan.innerText = 'This cannot be empty.';
+            } else {
+                errorSpan.innerText = '';
+            }
+        }
+
+    </script>
+    <script>
+        function refreshPage() {
+            location.reload();
+        }
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+            }
+        });
+    </script>
+    <style>
+        .custom-width {
+            width: 3000px;
+        }
+
+        .vh-100 {
+            height: 100vh; /* Set the height to 100% of the viewport height */
+            background-image: url('../../content/image/login.jpg'); /* Specify the URL of your background image */
+            background-color: #000000; /* Fallback background color */
+            background-size: cover; /* Cover the entire element with the image */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-attachment: fixed; /* Fix the background in place */
+        }
+
+        .custom-moved {
+            margin-left: 15cm;
+        }
+
+        .form-outline {
+            position: center;
+        }
+
+            .form-outline input,
+            .form-outline select,
+            .form-outline textarea {
+                border: 3px solid #ced4da;
+                border-radius: 0.25rem;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                width: 100%;
+            }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-9 {
+            margin-bottom: 20px; /* Adjust the value to control the amount of spacing */
+        }
+
+        .p-8 {
+            margin-bottom: 30px;
+            margin-top: 30px;
+            margin-left: 30px;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+        }
+
+        .col-md-c {
+            margin-left: 170px;
+        }
+    </style>
+</head>
+<body>
+
+    @using (Html.BeginForm())
+    {
+
+
+
+        @Html.AntiForgeryToken()
+
+        <div class="vh-100">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-1-strong" style="border-radius: 2rem; padding: 40px; background-color:aliceblue">
+                            <div class="card-body p-8">
+                                <h3 class="mb-9">Sign in</h3>
+                                <div class="form-outline mb-4 mx-auto custom-moved">
+                                    @Html.EditorFor(model => model.userName, new { htmlAttributes = new { @onblur = "validateField(this);", placeholder = "Username" } })
+                                    <p id="userNameError" class="text-danger"></p>
+                                    @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-outline mb-4 mx-auto custom-moved">
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @onblur = "validateField(this);", type = "password", placeholder = "Password" } })
+                                    <p id="passwordError" class="text-danger"></p>
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="checkBox" name="remember" value="true">
+                                    <label for="remember" style="font-size:medium;">remember me </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="@Url.Action("ForgetPassword", "Home", new { area = "" })"
+                                       target="_blank" style="font-size:smaller;" style="align-self:center;">Forgot Password?</a>
+                                </div>
+                                <br>
+                                <div>
+                                    <button class="btn btn-primary btn-block" type="submit" style="width: 285px;">Login</button>
+                                    <br>
+                                </div>
+                                
+                                <div class="col-md-c">
+                                    <a href="Signup"
+                                       target="_blank" style="font-size:smaller;" style="align-self:center;">Dont have account?</a>
+                                </div>
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>

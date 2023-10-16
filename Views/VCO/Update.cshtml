@@ -1,0 +1,75 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationForm>
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_LayoutPageVCO.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Submitted application</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Application ID
+                </th>
+                <th>
+                    Visa name
+                </th>
+                <th>
+                    Visa title
+                </th>
+                <th>
+                    Visa description
+                </th>
+                <th>
+                    Visa ID
+                </th>
+                <th>
+                    Registration ID
+                </th>
+                <th>
+                    Update
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaDiscription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.registrationID)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Update", "UpdateApplication", new { id = item.applicationID }, new { @class = "btn btn-pri" })
+                    </td>
+                </tr>
+            }
+
+    </table>
+</body>
+</html>

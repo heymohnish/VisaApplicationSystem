@@ -1,0 +1,249 @@
+﻿@model VisaApplicationSystem.Models.Registration
+
+@{
+    ViewBag.Title = "AddVCO";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="~/Scripts/CustomScript/Registration.js"></script>
+    <link href="~/Content/CustomCSS/Registration.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Add VCO</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="text" id="firstNameInput" class="form-control" name="firstName" onblur="onBlurName();" placeholder="First name">
+                    <p id="errorName" class="text-danger"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="text" id="lastNameInput" class="form-control" name="lastName" onblur="onBlurlName();" placeholder="Last name">
+                    <p id="errorlName" class="text-danger"></p>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="emailInput" class="form-control" name="email" onblur="onBlurEmail();" placeholder="Email">
+                <p id="errorEmail" class="text-danger"></p>
+            </div>
+
+            <div class="form-group">
+                Gender*:
+                <input type="radio" id="m" name="gender" value="male">
+                <label for="m">Male</label>
+                <input type="radio" id="f" name="gender" value="female">
+                <label for="f">Female</label>
+                <input type="radio" id="o" name="gender" value="other">
+                <label for="o">Other</label><br><br>
+
+            </div>
+
+            <div class="form-group">
+                @*Country*@
+                @Html.DropDownListFor(model => model.country, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select Country", new { @class = "form-control", id = "countryDropdown" })
+                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+                @*State*@
+                @Html.DropDownListFor(model => model.state, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select State", new { @class = "form-control", id = "stateDropdown" })
+                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                @*City*@
+                @Html.DropDownListFor(model => model.city, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select City", new { @class = "form-control", id = "cityDropdown" })
+                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+
+
+                <input type="date" id="DOB" name="dob" placeholder="Date of Birth*" onclick="setMinDate()" onblur="calculateAge()">
+            </div>
+            <input type="number" id="age" name="age" placeholder="Age*" readonly><br>
+            <div id="errorAge">
+                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+            </div><br>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control", @onblur = "validateField(this);", placeholder = "Phone" } })
+                    <p id="visaName " class="text-danger"></p>
+                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control", @onblur = "validateField(this);", placeholder = "Address" } })
+                    <p id="visaName " class="text-danger"></p>
+                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="text" id="username" name="username" placeholder="Username*" onblur="onBlurUser1()"><br>
+                    <div id="errorUserName" class="text-danger">
+                        @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="password" id="passwordInput" class="form-control" onblur="validatePassword(this);" name="password" placeholder="Password">
+                    <p id="passwordError" class="text-danger"></p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="password" id="cpasswordInput" class="form-control" onblur="validatecPassword(this);" name="cpassword" placeholder="Confirm Password">
+                    <p id="cpasswordError" class="text-danger"></p>
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-pri" />
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="~/Scripts/CustomScript/Validation.js"></script>
+        <script>
+            $(document).ready(function () {
+            var stateDropdown = $("#countryDropdown");
+            $.ajax({
+                url: "@Url.Action("GetCountry", "Form")", type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Populate the dropdown with the fetched states
+                    $.each(data, function (index, item) {
+                        stateDropdown.append($('<option>', {
+                            value: item,
+                            text: item
+                        }));
+                    });
+                }
+            });
+        });
+        $(document).ready(function () {
+            var stateDropdown = $("#stateDropdown");
+            var countryDropdown = $("#countryDropdown");
+            countryDropdown.change(function () {
+                var selectedCountry = countryDropdown.val();
+                $.ajax({
+                    url: "@Url.Action("GetStates", "Form")",
+                    type: "GET",
+                    dataType: "json",
+                    data: { country: selectedCountry },
+                    success: function (data) {
+                        stateDropdown.empty();
+                        stateDropdown.append($('<option>', {
+                            value: "",
+                            text: "Select State"
+                        }));
+                        $.each(data, function (index, item) {
+                            stateDropdown.append($('<option>', {
+                                value: item,
+                                text: item
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            var cityDropdown = $("#cityDropdown");
+            var stateDropdown = $("#stateDropdown");
+            stateDropdown.change(function () {
+                var selectedState = stateDropdown.val();
+                $.ajax({
+                    url: "@Url.Action("GetCities", "Form")",
+                    type: "GET",
+                    dataType: "json",
+                    data: { state: selectedState },
+                    success: function (data) {
+                        // Clear existing options in the city dropdown
+                        cityDropdown.empty();
+                        cityDropdown.append($('<option>', {
+                            value: "",
+                            text: "Select City"
+                        }));
+                        // Populate the dropdown with the fetched cities
+                        $.each(data, function (index, item) {
+                            cityDropdown.append($('<option>', {
+                                value: item,
+                                text: item
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+         $(document).ready(function () {
+        var userNameInput = $("#username"); // Corrected the ID
+            var userNameValidationMessage = $("#errorUserName"); // Corrected the ID
+
+            userNameInput.on('keyup', function () { // Changed 'keyup' to 'focusout'
+            var userName = userNameInput.val();
+            if (userName !== "") {
+                $.ajax({
+                    url: "@Url.Action("CheckUserNameExists", "Form")",
+                    type: "POST",
+                    data: { userName: userName },
+                    success: function (result) {
+                        if (result) {
+                            userNameValidationMessage.text("Username already exists.");
+                        } else {
+                            userNameValidationMessage.text("");
+                        }
+                    }
+                });
+            }
+        });
+         });
+            $(document).ready(function () {
+                var userNameInput = $("#emailInput");
+                var userNameValidationMessage = $("#errorEmail");
+
+            userNameInput.on('keyup', function () { // Changed 'keyup' to 'focusout'
+            var userName = userNameInput.val();
+            if (userName !== "") {
+                $.ajax({
+                    url: "@Url.Action("CheckEmailExists", "Form")",
+                    type: "POST",
+                    data: { userName: userName },
+                    success: function (result) {
+                        if (result) {
+                            userNameValidationMessage.text("Email already exists.");
+                        } else {
+                            userNameValidationMessage.text("");
+                        }
+                    }
+                });
+            }
+        });
+    });
+        </script>
+    }
+</body>
+</html>

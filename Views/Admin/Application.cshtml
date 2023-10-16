@@ -1,0 +1,90 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationPayload>
+
+@{
+    ViewBag.Title = "Application";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+    <script src="https://kit.fontawesome.com/ce19876732.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Application</h2>
+    @using (Html.BeginForm("Application", "Admin", FormMethod.Get))
+    {
+        <p>
+            Filter by:
+            @Html.DropDownList("statusFilter", new SelectList(new[]
+            {
+                new SelectListItem { Text = "All", Value = "" },  // Show all applications
+                new SelectListItem { Text = "Submitted", Value = "Submitted" },
+                new SelectListItem { Text = "Approved", Value = "Approved" },
+                new SelectListItem { Text = "Rejected", Value = "Rejected" },
+            }, "Value", "Text"), "Select Status")
+
+            <button type="submit">Filter</button>
+        </p>
+    }
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Application ID
+                </th>
+                <th>
+                    Visa name
+                </th>
+                <th>
+                    Visa title
+                </th>
+                <th>
+                    Applicant name
+                </th>
+
+                <th>
+                    Application Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaTitle)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fullName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("GeneratePDF", new { id = item.applicationID })" class="custom-button-download">
+                            <span class='icon'><i class='fas fa-download'></i></span>
+                        </a>   |
+
+                        @Html.ActionLink("Delete", "DeleteApplication", new { id = item.applicationID }, new { @class = "btn btn-dan" })
+                    </td>
+                </tr>
+            }
+
+    </table>
+</body>
+</html>

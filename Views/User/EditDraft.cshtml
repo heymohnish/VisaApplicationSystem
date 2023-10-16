@@ -1,0 +1,636 @@
+﻿@model VisaApplicationSystem.Models.ApplicationPayload
+
+@{
+    ViewBag.Title = "EditDraft";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+@{
+    // Set a default value for the returnDate property
+    Model.returnDate = new DateTime(2023, 10, 14); // Replace with your desired date
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+    <link href="~/Content/CustomCSS/Registration.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        function validateField(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger");
+            if (value === '') {
+                errorSpan.innerText = 'This cannot be empty.';
+            } else {
+                errorSpan.innerText = '';
+            }
+        }
+
+        function validateEmail(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger-email");
+
+            // Regular expression for a basic email validation
+            var emailPattern = /^[A-Za-z0-9._%+-]+@@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+            if (value === '') {
+                // If the field is empty, show an error message
+                errorSpan.textContent = 'Email should not be empty';
+            } else if (!emailPattern.test(value)) {
+                // If the email format is invalid, show an error message
+                errorSpan.textContent = 'Invalid email format';
+            } else {
+                // If the email is valid, clear any previous error message
+                errorSpan.textContent = '';
+            }
+        }
+        function onBlurName(field) {
+            var errorName = field.parentElement.querySelector(".text-danger");
+            var firstNameValue = field.value.trim();
+
+            // Regular expressions for numbers and special characters
+            var hasNumber = /\d/.test(firstNameValue);
+            var hasSpecialCharacter = /[!@@#$%^&*()_+{}\[\]:;<>,.?~\\|]/.test(firstNameValue);
+
+            if (firstNameValue === "") {
+                errorName.innerHTML = "First name is required.";
+            } else if (hasNumber) {
+                errorName.innerHTML = "First name should not contain numbers.";
+            } else if (hasSpecialCharacter) {
+                errorName.innerHTML = "First name should not contain special characters.";
+            } else {
+                errorName.innerHTML = ""; // Clear any previous error message.
+            }
+        }
+
+    </script>
+    <script>
+        // Get references to the input and hidden fields
+        var dateOfBirthInput = document.getElementById("dateOfBirthInput");
+        var hiddenDateOfBirth = document.getElementById("hiddenDateOfBirth");
+
+        // Add an event listener to update the hidden field when the date input changes
+        dateOfBirthInput.addEventListener("change", function () {
+            hiddenDateOfBirth.value = dateOfBirthInput.value;
+        });
+    </script>
+    <style>
+        .text-danger-email {
+            color: red;
+            font-weight: normal; /* Optionally, make the text bold for emphasis */
+            /* Other styling properties as needed */
+        }
+
+        .text-danger {
+            color: red;
+            font-weight: normal; /* Optionally, make the text bold for emphasis */
+            /* Other styling properties as needed */
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Apply visa</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.dateOfBirth)
+        @Html.HiddenFor(model => model.passportExpiryDate)
+        @Html.HiddenFor(model => model.returnDate)
+        @Html.HiddenFor(model => model.departureDate)
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p><h4>Visa details @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+    <div class="form-group">
+        @Html.LabelFor(model => model.applicationID, "Application ID :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.applicationID, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.applicationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaName, "Visa name :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaName, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaTitle, "Visa title :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaTitle, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaDiscription, "Description :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaDiscription, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaDiscription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaId, "Visa ID :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaId, new { htmlAttributes = new { @class = "number", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.registrationID, "Registration ID :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.registrationID, new { htmlAttributes = new { @class = "number", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.registrationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (Model.isPersonalInformation)
+    {
+        <div class="form-group">
+
+            <p><h4>Basic details @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+            @Html.ValidationMessageFor(model => model.isPersonalInformation, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fullName, "Full name :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @type = "text", @id = "fullNameInput", @onblur = "onBlurName(this);" } })
+                <p id="userNameError" class="text-danger-email"></p>
+                @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger", @id = "fullNameError" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dateOfBirth, "Date of birth :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dateOfBirth, new { htmlAttributes = new { @type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd"), @id = "dateOfBirthInput" } })
+
+                @Html.ValidationMessageFor(model => model.dateOfBirth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.nationality, "Nationality :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nationality, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                @Html.ValidationMessageFor(model => model.nationality, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.gender, "Gender :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.gender, "Male", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.gender, "Female", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Female">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.gender, "Other", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Other">Other</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.passportNumber, "Passport Number :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.passportNumber, new { htmlAttributes = new { @type = "number", @onblur = "validateField(this);" } })
+                @Html.ValidationMessageFor(model => model.passportNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.passportExpiryDate, "Passport Expiry Date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.passportExpiryDate, new { htmlAttributes = new { @type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd"), @value = Model.returnd } })
+                @Html.ValidationMessageFor(model => model.passportExpiryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.phoneNumber, "Phone number :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @type = "number", @onblur = "validateField(this);" } })
+                @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, "Email :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @type = "text", @onblur = "validateEmail(this);" } })
+                <br>
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger-email" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.residentialAddress, "Address :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.residentialAddress, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                @Html.ValidationMessageFor(model => model.residentialAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.purposeOfTravel, "Pusrpose of travel :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.purposeOfTravel, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                @Html.ValidationMessageFor(model => model.purposeOfTravel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.departureDate, "Departure date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.departureDate, new { htmlAttributes = new { @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.departureDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.returnDate, "Return date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.returnDate, new { htmlAttributes = new { @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.returnDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    <p><h4>Supportive documents @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+
+    @if (Model.isPhoto)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isPhoto, "Photo :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isPhoto)
+        </div>
+        if (Model != null && Model.photo != null && Model.photo.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.photo)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.photo, "Upload photo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.photo, new { id = "photo" })
+                    <input type="file" id="filephoto" name="file" accept=".jpg">
+                    <span class="text-danger" id="fileSizeError" style="display: none;">File size should be below 2MB.</span>
+                </div>
+            </div>
+            <script>
+                document.getElementById("filephoto").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("photo").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                    var maxSize = 1 * 1024 * 1024;
+                    if (file.size > maxSize) {
+                        document.getElementById("fileSizeError").style.display = "block";
+                        document.getElementById("filephoto").value = "";
+                    } else {
+                        document.getElementById("fileSizeError").style.display = "none";
+                    }
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isPAN)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isPhoto, "PAN :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isPhoto)
+        </div>
+        if (Model != null && Model.PAN != null && Model.PAN.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.PAN)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.PAN, "Upload PAN card", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.PAN, new { id = "Hidden2" })
+                    <input type="file" id="file2" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("file2").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("Hidden2").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isAadhar)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isPhoto, "Aadhar :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isPhoto)
+        </div>
+        if (Model != null && Model.aadhar != null && Model.aadhar.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.aadhar)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.aadhar, "Upload aadhar", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.aadhar, new { id = "aadhar" })
+                    <input type="file" id="fileAadhar" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("fileAadhar").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("aadhar").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isGovenmentProof)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isPhoto, "Govenment proof :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isPhoto)
+        </div>
+        if (Model != null && Model.govenmentProof != null && Model.govenmentProof.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.govenmentProof)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.govenmentProof, "Upload govenment proof", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.govenmentProof, new { id = "govenmentProof" })
+                    <input type="file" id="fileGovenmentProof" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("fileGovenmentProof").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("govenmentProof").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isPassport)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isPhoto, "Passport :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isPhoto)
+        </div>
+
+        if (Model != null && Model.passport != null && Model.passport.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.passport)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.passport, "Upload passport", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.passport, new { id = "passport" })
+                    <input type="file" id="filePassport" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("filePassport").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("passport").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isEmployeeProof)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isEmployeeProof, "Employee proof :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isEmployeeProof)
+        </div>
+
+        if (Model != null && Model.employeeProof != null && Model.employeeProof.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.employeeProof)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.employeeProof, "Upload employee proof", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.employeeProof, new { id = "employeeProof" })
+                    <input type="file" id="fileemployeeProof" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("fileemployeeProof").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("employeeProof").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isEducationProof)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isEducationProof, "Education Proof :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isEducationProof)
+        </div>
+        if (Model != null && Model.educationProof != null && Model.educationProof.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.educationProof)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.educationProof, "Upload education proof", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.educationProof, new { id = "educationProof" })
+                    <input type="file" id="fileeducationProof" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("fileeducationProof").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("educationProof").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isBankProof)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isBankProof, "Bank proof :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isBankProof)
+        </div>
+        if (Model != null && Model.bankProof != null && Model.bankProof.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.bankProof)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.bankProof, "Upload bank proof", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.bankProof, new { id = "bankProof" })
+                    <input type="file" id="filebankProof" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("filebankProof").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("bankProof").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isToeflCertification)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isToeflCertification, "Toefl Certification :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isToeflCertification)
+        </div>
+        if (Model != null && Model.toeflCertification != null && Model.toeflCertification.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.toeflCertification)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.toeflCertification, "Upload toefl certification", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.toeflCertification, new { id = "toeflCertification" })
+                    <input type="file" id="filetoeflCertification" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("filetoeflCertification").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("toeflCertification").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    @if (Model.isVisitorProof)
+    {
+        <div class="form-group col-md-2">
+            @Html.LabelFor(model => model.isVisitorProof, "Visitor proof :", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.isVisitorProof)
+        </div>
+
+        if (Model != null && Model.visitorProof != null && Model.visitorProof.Length > 0)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.visitorProof)" alt="Image" width="200" height="200" />
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.visitorProof, "Upload visitor proof", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.visitorProof, new { id = "visitorProof" })
+                    <input type="file" id="filevisitorProof" name="file" accept=".jpg">
+                </div>
+            </div>
+            <script>
+                document.getElementById("filevisitorProof").addEventListener("change", function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var base64String = e.target.result.split(",")[1];
+                        document.getElementById("visitorProof").value = base64String;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        }
+        <hr />
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit application" class="btn btn-pri" />
+        </div>
+    </div>
+
+</div>
+    }
+    <!-- Include jQuery JavaScript if not already included -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Handle checkbox selection
+            $('.status-checkbox').on('change', function () {
+                if ($(this).is(':checked')) {
+                    // Uncheck all other checkboxes
+                    $('.status-checkbox').not(this).prop('checked', false);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

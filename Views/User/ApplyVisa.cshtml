@@ -1,0 +1,82 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.Visa>
+
+@{
+    ViewBag.Title = "ApplyVisa";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+
+<h2>ApplyVisa</h2>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card" style="width: 18rem;">
+                <!-- Assuming you have an image URL property in your model -->
+                <img src="~/Content/Image/Home/e-visa-countries-for-indians.jpg"class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@item.visaName</h5>
+                    <p class="card-text">@item.visaTitle</p>
+                    <a href="@Url.Action("VisaApply", "User", new { id = item.visaID })" class="btn btn-primary">VisaApply</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<style>
+    .custom-container {
+        max-width: 1500px; /* Set your desired max-width here */
+        margin: 0 auto; /* Center the container horizontally */
+    }
+
+    .custom-container-card {
+        max-width: 1000px;
+        padding: inherit; /* Set your desired max-width here */
+        margin: 0 auto; /* Center the container horizontally */
+    }
+
+    .button-hov {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #2151ff;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 18px;
+        font-style: italic;
+        padding: 10px;
+        width: 150px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+        .button-hov span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+            .button-hov span:after {
+                content: '\00bb';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
+            }
+
+        .button-hov:hover span {
+            padding-right: 25px;
+        }
+
+            .button-hov:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
+</style>
+
+
+</table>

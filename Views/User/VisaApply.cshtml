@@ -1,0 +1,665 @@
+﻿@model VisaApplicationSystem.Models.ApplicationForm
+
+@{
+    ViewBag.Title = "VisaApply";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+    <link href="~/Content/CustomCSS/Registration.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        function validateField(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger");
+            if (value === '') {
+                errorSpan.innerText = 'This cannot be empty.';
+            } else {
+                errorSpan.innerText = '';
+            }
+        }
+        function validateEmail(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger-email");
+
+            // Regular expression for a basic email validation
+            var emailPattern = /^[A-Za-z0-9._%+-]+@@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+            if (value === '') {
+                // If the field is empty, show an error message
+                errorSpan.textContent = 'Email should not be empty';
+            } else if (!emailPattern.test(value)) {
+                // If the email format is invalid, show an error message
+                errorSpan.textContent = 'Invalid email format';
+            } else {
+                // If the email is valid, clear any previous error message
+                errorSpan.textContent = '';
+            }
+        }
+function onBlurName(field) {
+    var errorName = field.parentElement.querySelector(".text-danger");
+    var firstNameValue = field.value.trim();
+
+    // Regular expressions for numbers and special characters
+    var hasNumber = /\d/.test(firstNameValue);
+    var hasSpecialCharacter = /[!@@#$%^&*()_+{}\[\]:;<>,.?~\\|]/.test(firstNameValue);
+
+    if (firstNameValue === "") {
+        errorName.innerHTML = "First name is required.";
+    } else if (hasNumber) {
+        errorName.innerHTML = "First name should not contain numbers.";
+    } else if (hasSpecialCharacter) {
+        errorName.innerHTML = "First name should not contain special characters.";
+    } else {
+        errorName.innerHTML = ""; // Clear any previous error message.
+    }
+}
+
+    </script>
+    <style>
+        .text-danger-email {
+            color: red;
+            font-weight: normal; /* Optionally, make the text bold for emphasis */
+            /* Other styling properties as needed */
+        }
+        .text-danger {
+            color: red;
+            font-weight: normal; /* Optionally, make the text bold for emphasis */
+            /* Other styling properties as needed */
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Apply visa</h2>
+    
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p><h4>Visa details @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaName, "Visa name :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaName, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaTitle, "Visa title :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaTitle, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaDiscription, "Description :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaDiscription, new { htmlAttributes = new { @type = "text", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaDiscription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.visaId, "Visa ID :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.visaId, new { htmlAttributes = new { @class = "number", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.visaId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.registrationID, "Registration ID :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.registrationID, new { htmlAttributes = new { @class = "number", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.registrationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (Model.isPersonalInformation)
+    {
+        <div class="form-group">
+
+            <p><h4>Basic details @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+            @Html.ValidationMessageFor(model => model.isPersonalInformation, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.fullName, "Full name :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.fullName, new { htmlAttributes = new { @type = "text", @id = "fullNameInput", @onblur = "onBlurName(this);" } })
+                <p id="userNameError" class="text-danger-email"></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.fullName, "", new { @class = "text-danger", @id = "fullNameError" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.dateOfBirth, "Date of birth :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.dateOfBirth, new { htmlAttributes = new { @type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.personalInformation.dateOfBirth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.nationality, "Nationality :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.nationality, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                <p></p> 
+                @Html.ValidationMessageFor(model => model.personalInformation.nationality, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.gender, "Gender :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.personalInformation.gender, "Male", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.personalInformation.gender, "Female", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Female">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(model => model.personalInformation.gender, "Other", new { @class = "form-check-input" })
+                    <label class="form-check-label" for="gender_Other">Other</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.personalInformation.gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.passportNumber, "Passport Number :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.passportNumber, new { htmlAttributes = new { @type = "number", @onblur = "validateField(this);" } })
+                <p></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.passportNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.passportExpiryDate, "Passport Expiry Date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.passportExpiryDate, new { htmlAttributes = new { @type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.personalInformation.passportExpiryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.phoneNumber, "Phone number :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.phoneNumber, new { htmlAttributes = new { @type = "number", @onblur = "validateField(this);" } })
+                <p></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.phoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        /*
+        public string email { get; set; }
+        public string residentialAddress { get; set; }
+        public string purposeOfTravel { get; set; }
+        public string destinationCountry { get; set; }
+        public DateTime departureDate { get; set; }
+        public DateTime returnDate { get; set; }*/
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.email, "Email :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.email, new { htmlAttributes = new { @type = "text", @onblur = "validateEmail(this);" } })
+                <br>
+                @Html.ValidationMessageFor(model => model.personalInformation.email, "", new { @class = "text-danger-email" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.residentialAddress, "Address :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.residentialAddress, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                <p></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.residentialAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.purposeOfTravel, "Pusrpose of travel :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.purposeOfTravel, new { htmlAttributes = new { @type = "text", @onblur = "validateField(this);" } })
+                <p></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.purposeOfTravel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.departureDate, "Departure date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.departureDate, new { htmlAttributes = new { @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.personalInformation.departureDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.personalInformation.returnDate, "Return date :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.personalInformation.returnDate, new { htmlAttributes = new { @type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") } })
+                <p></p>
+                @Html.ValidationMessageFor(model => model.personalInformation.returnDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    <p><h4>Supportive documents @Html.EditorFor(model => model.isPersonalInformation)</h4></p>
+
+    @if (Model.isPhoto)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Photo ( @Html.EditorFor(model => model.isPhoto) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.photo, "Upload photo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.photo, new { id = "photo" })
+                <input class="form-control form-control" type="file" id="filephoto" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById("filephoto").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("photo").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                // Check file size
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("filephoto").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isPAN)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>PAN ( @Html.EditorFor(model => model.isPAN) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PAN, "Upload PAN card", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.PAN, new { id = "Hidden2" })
+                <input class="form-control form-control" type="file" id="file2" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError1" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("file2").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("Hidden2").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError1").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("file2").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError1").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isAadhar)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Aadhar ( @Html.EditorFor(model => model.isAadhar) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.aadhar, "Upload aadhar", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.aadhar, new { id = "aadhar" })
+                <input class="form-control form-control" type="file" id="fileAadhar" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError2" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("fileAadhar").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("aadhar").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError2").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("fileAadhar").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError2").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isGovenmentProof)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Govenment proof ( @Html.EditorFor(model => model.isGovenmentProof) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.govenmentProof, "Upload govenment proof", htmlAttributes: new { @class = "control-label col-md-10 " })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.govenmentProof, new { id = "govenmentProof" })
+                <input class="form-control form-control" type="file" id="fileGovenmentProof" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError3" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("fileGovenmentProof").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("govenmentProof").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError3").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("fileGovenmentProof").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError3").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isPassport)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Passport ( @Html.EditorFor(model => model.isPassport) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.passport, "Upload passport", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.passport, new { id = "passport" })
+                <input class="form-control form-control" type="file" id="filePassport" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError4" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("filePassport").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("passport").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError4").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("filePassport").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError4").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isEmployeeProof)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Employee Proof ( @Html.EditorFor(model => model.isEmployeeProof) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.employeeProof, "Upload employee proof", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.employeeProof, new { id = "employeeProof" })
+                <input class="form-control form-control" type="file" id="fileemployeeProof" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError5" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("fileemployeeProof").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("employeeProof").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError5").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("fileemployeeProof").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError5").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isEducationProof)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Education Proof ( @Html.EditorFor(model => model.isEducationProof) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.educationProof, "Upload education proof", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.educationProof, new { id = "educationProof" })
+                <input class="form-control form-control" type="file" id="fileeducationProof" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError6" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("fileeducationProof").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("educationProof").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError6").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("fileeducationProof").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError6").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isBankProof)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Bank proof ( @Html.EditorFor(model => model.isBankProof) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bankProof, "Upload bank proof", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.bankProof, new { id = "bankProof" })
+                <input class="form-control form-control" type="file" id="filebankProof" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError7" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("filebankProof").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("bankProof").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError7").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("filebankProof").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError7").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isToeflCertification)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Toefl Certification ( @Html.EditorFor(model => model.isToeflCertification) )</h6></p>
+        </div>
+        <div class="form-group ">
+            @Html.LabelFor(model => model.toeflCertification, "Upload toefl certification", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.toeflCertification, new { id = "toeflCertification" })
+                <input class="form-control form-control" type="file" id="filetoeflCertification" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeError8" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("filetoeflCertification").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("toeflCertification").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeError8").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("filetoeflCertification").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeError8").style.display = "none";
+                }
+            });
+        </script>
+    }
+    @if (Model.isVisitorProof)
+    {
+        <hr class="mx-n3">
+        <div class="form-group">
+            <p><h6>Visitor Proof ( @Html.EditorFor(model => model.isVisitorProof) )</h6></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.visitorProof, "Upload visitor proof", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.visitorProof, new { id = "visitorProof" })
+                <input class="form-control form-control" type="file" id="filevisitorProof" name="file" accept=".jpg">
+                <span class="text-danger" id="fileSizeErro9" style="display: none;">File size should be below 2MB.</span>
+            </div>
+        </div>
+        <script>
+            document.getElementById("filevisitorProof").addEventListener("change", function (event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64String = e.target.result.split(",")[1];
+                    document.getElementById("visitorProof").value = base64String;
+                };
+                reader.readAsDataURL(file);
+                var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+                if (file.size > maxSize) {
+                    // Display an error message
+                    document.getElementById("fileSizeErro9").style.display = "block";
+                    // Clear the file input
+                    document.getElementById("filevisitorProof").value = "";
+                } else {
+                    // Hide the error message
+                    document.getElementById("fileSizeErro9").style.display = "none";
+                }
+            });
+        </script>
+    }
+    <br>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="submitButton" value="Submit application" class="btn btn-primary" />
+            <input type="submit" name="submitButton" value="Draft application" class="btn btn-primary" />
+        </div>
+    </div>
+
+</div>
+
+    }
+    <script>
+    function sendDataToAnotherController() {
+        var applicationForm = @Html.Raw(Json.Encode(Model)); // Serialize the model as JSON
+
+        $.ajax({
+            type: "POST",
+            url: "/User/Draft",
+            data: JSON.stringify({ model: applicationForm }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                window.location.href = '/User/ApplyVisa';
+            },
+            error: function (error) {
+                window.location.href = '/User/ApplyVisa';
+            }
+        });
+    }
+    </script>
+
+
+    <script>
+        document.getElementById("PAN").addEventListener("change", function (event) {
+            console.log("File input changed.");
+            var file = event.target.files[0];
+            console.log("Selected file: ", file);
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var base64String = e.target.result.split(",")[1];
+                console.log("Base64 string: ", base64String);
+                document.getElementById("PAN").value = base64String;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

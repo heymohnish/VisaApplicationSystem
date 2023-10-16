@@ -1,0 +1,83 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.Registration>
+
+@{
+    ViewBag.Title = "GetAllAdmin";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Admin Profile</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Admin ID
+                </th>
+                <th>
+                    Firstname
+                </th>
+                <th>
+                    Lastname
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Phone number
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.registrationID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.userName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "DeleteAdmin", new { id = item.registrationID }, new { @class = "btn btn-dan" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

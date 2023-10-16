@@ -1,0 +1,445 @@
+﻿@model VisaApplicationSystem.Models.Visa
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function validateField(field) {
+            var value = field.value.trim();
+            var errorSpan = field.parentElement.querySelector(".text-danger");
+            if (value === '') {
+                errorSpan.innerText = 'This cannot be empty.';
+            } else {
+                errorSpan.innerText = '';
+            }
+        }
+
+    </script>
+</head>
+<style>
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+
+    .custom-moved {
+        margin-left: 15cm;
+    }
+
+    .form-outline {
+        position: center;
+    }
+
+        .form-outline input,
+        .form-outline select,
+        .form-outline textarea {
+            border: 3px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+    input[type=text],
+    select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=number],
+    select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>Edit visa</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.visaID)
+
+        <div class="form-group">
+            Visa name
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.visaName, new { htmlAttributes = new { @class = "form-control", @onblur = "validateField(this);", placeholder = "Visa name" } })
+                <p id="visaName " class="text-danger"></p>
+                @Html.ValidationMessageFor(model => model.visaName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p></p>Visa title
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.visaTitle, new { htmlAttributes = new { @class = "form-control", @onblur = "validateField(this);", placeholder = "Visa title" } })
+                <p id="visaTitle" class="text-danger"></p>
+                @Html.ValidationMessageFor(model => model.visaTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p></p>Visa description
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.visaDescription, new { htmlAttributes = new { @class = "form-control", @onblur = "validateField(this);", placeholder = "Description" } })
+                <p id="visaDescription" class="text-danger"></p>
+                @Html.ValidationMessageFor(model => model.visaDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p></p>Admin ID
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adminID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adminID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <h4>Supportive Documents</h4>
+        @if (Model.personalInformation)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="personalInformation" name="personalInformation" value="true" checked>
+                <label class="form-check-label" for="personalInformation">Personal Information</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="personalInformation" name="personalInformation" value="true">
+                <label class="form-check-label" for="personalInformation">Personal Information</label>
+            </div>
+
+        }
+
+
+
+        @if (Model.PAN)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="PAN" name="PAN" value="true" checked>
+                <label class="form-check-label" for="PAN">PAN</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="PAN" name="PAN" value="true">
+                <label class="form-check-label" for="PAN">PAN</label>
+            </div>
+
+        }
+
+        @if (Model.aadhar)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="aadhar" name="aadhar" value="true" checked>
+                <label class="form-check-label" for="aadhar">Aadhar</label>
+            </div>
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="aadhar" name="aadhar" value="true">
+                <label class="form-check-label" for="aadhar">Aadhar</label>
+            </div>
+
+        }
+
+
+        @if (Model.governmentProof)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="governmentProof" name="governmentProof" value="true" checked>
+                <label class="form-check-label" for="governmentProof">PAN</label>
+            </div>
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="governmentProof" name="governmentProof" value="true">
+                <label class="form-check-label" for="governmentProof">PAN</label>
+            </div>
+
+        }
+
+        @if (Model.photo)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="photo" name="photo" value="true" checked>
+                <label class="form-check-label" for="photo">Photo</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="photo" name="photo" value="true">
+                <label class="form-check-label" for="photo">Photo</label>
+            </div>
+
+        }
+
+        @if (Model.passport)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="passport" name="passport" value="true" checked>
+                <label class="form-check-label" for="passport">Passport</label>
+            </div>
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="passport" name="passport" value="true">
+                <label class="form-check-label" for="passport">Passport</label>
+            </div>
+        }
+
+        @if (Model.employeeProof)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="employeeProof" name="employeeProof" value="true" checked>
+                <label class="form-check-label" for="employeeProof">Employee Proof</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="employeeProof" name="employeeProof" value="true">
+                <label class="form-check-label" for="employeeProof">Employee Proof</label>
+            </div>
+        }
+
+        @if (Model.educationProof)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="educationProof" name="educationProof" value="true" checked>
+                <label class="form-check-label" for="educationProof">Education Proof</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="educationProof" name="educationProof" value="true">
+                <label class="form-check-label" for="educationProof">Education Proof</label>
+            </div>
+
+        }
+        @if (Model.bankProof)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="bankProof" name="bankProof" value="true" checked>
+                <label class="form-check-label" for="bankProof">Bank Proof</label>
+            </div>
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="bankProof" name="bankProof" value="true">
+                <label class="form-check-label" for="bankProof">Bank Proof</label>
+            </div>
+        }
+
+        @if (Model.toeflCertification)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="toeflCertification" name="toeflCertification" value="true" checked>
+                <label class="form-check-label" for="toeflCertification">TOEFL Certification</label>
+            </div>
+
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="toeflCertification" name="toeflCertification" value="true">
+                <label class="form-check-label" for="toeflCertification">TOEFL Certification</label>
+            </div>
+
+        }
+
+        @if (Model.visitorProof)
+        {
+
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="visitorProof" name="visitorProof" value="true" checked>
+                <label class="form-check-label" for="visitorProof">VisitorProof</label>
+            </div>
+        }
+        else
+        {
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="visitorProof" name="visitorProof" value="true">
+                <label class="form-check-label" for="visitorProof">VisitorProof</label>
+            </div>
+
+        }
+        <br>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-pri" />
+            </div>
+        </div>
+    </div>
+    }
+</body>
+</html>
+
+@*
+
+    <div class="form-group">
+                @Html.LabelFor(model => model.personalInformation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.personalInformation)
+                        @Html.ValidationMessageFor(model => model.personalInformation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PAN, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.PAN)
+                        @Html.ValidationMessageFor(model => model.PAN, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.aadhar, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.aadhar)
+                        @Html.ValidationMessageFor(model => model.aadhar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.governmentProof, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.governmentProof)
+                        @Html.ValidationMessageFor(model => model.governmentProof, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.photo)
+                        @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.passport, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.passport)
+                        @Html.ValidationMessageFor(model => model.passport, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.employeeProof, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.employeeProof)
+                        @Html.ValidationMessageFor(model => model.employeeProof, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.educationProof, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.educationProof)
+                        @Html.ValidationMessageFor(model => model.educationProof, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.bankProof, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.bankProof)
+                        @Html.ValidationMessageFor(model => model.bankProof, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.toeflCertification, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.toeflCertification)
+                        @Html.ValidationMessageFor(model => model.toeflCertification, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.visitorProof, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.visitorProof)
+                        @Html.ValidationMessageFor(model => model.visitorProof, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@

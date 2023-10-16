@@ -1,0 +1,292 @@
+﻿fieldset {
+	border-radius: 10px;
+	width: 1000px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #ffffff;
+	border-color: #ffffff;
+	margin-left: 10cm;
+	padding-top: 1cm;
+	padding-left: 10cm;
+	padding-bottom: 1cm;
+	padding-right: 10cm;
+}
+.center-fieldset {
+	padding-right: 10cm;
+	justify-content: center;
+	display: contents;
+	align-items: center;
+	height: 1000vh; /* Adjust this value as needed */
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+
+
+li {
+	float: right;
+}
+
+	li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+	}
+
+		li a:hover:not(.active) {
+			background-color: #007dc5;
+			box-shadow: inset 140px 0 0 0 #54b3d6;
+			color: white;
+		}
+
+#para1 {
+	color: rgb(0, 0, 0);
+	padding-left: 55%;
+	padding-top: 3%;
+	font-size: 1.5cm;
+	font-family: Consolas;
+}
+
+#para2 {
+	padding-left: 3.5%;
+	padding-top: 3%;
+}
+
+body {
+	background-size: 100%;
+	/* opacity: 20%; */
+	background-image: url('../image/pexels-myburgh-roux-2046548.jpg');
+	background-repeat: repeat;
+	background-size: auto 1100px;
+	image-resolution: 20%;
+	height: 130vh;
+	padding: 0;
+	margin: 0;
+}
+
+input[type=text],
+select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=number],
+select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+
+
+input[type=date],
+select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=password],
+select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type="checkbox"]:focus {
+	outline: max(1px, 0.15em) solid currentColor;
+	outline-offset: max(5px, 0.1em);
+}
+
+input[type="submit"] {
+	background-color: rgb(255, 72, 72);
+	color: white;
+	border-radius: 10px;
+	border-color: white;
+	padding: 5px 75px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	/* Green */
+}
+
+	input[type="submit"]:hover {
+		background-color: rgb(182, 0, 0);
+		color: white;
+	}
+
+.foow {
+	background-color: #9c9c9c;
+}
+/* Style the select element */
+.custom-select {
+	width: 100%;
+	padding: 1px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+	.custom-select:focus {
+		outline: none;
+		border-color: #007bff; /* Change border color when focused */
+		box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a blue shadow when focused */
+	}
+
+	/* Style the dropdown arrow icon */
+	.custom-select::after {
+		content: '\25BC'; /* Unicode down arrow character */
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+		font-size: 16px;
+		pointer-events: none; /* Prevent clicks on the arrow */
+	}
+
+/* #lname {}
+
+#DOB {}
+
+#age {}
+
+#phone {}
+
+#email {}
+
+#address {}
+
+#state {}
+
+#username {}
+
+#password {}
+
+#repassword {} */
+#fname:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#lname:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#DOB:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#age:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#phone:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#email:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#address:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#state:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#username:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#password:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#repassword:focus {
+	border: 4px solid rgb(243, 237, 57);
+}
+
+#errorMail {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorName {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorUserName {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorLname {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorMessage {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorPhone {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorAge {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorPassword {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}
+
+#errorrePassword {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}

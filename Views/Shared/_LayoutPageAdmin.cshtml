@@ -1,0 +1,121 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+    function refreshPage() {
+        location.reload();
+    }
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+        }
+    });
+    </script>
+</head>
+<style>
+    /* Define a CSS class for the icons */
+    .icon {
+        margin-right: 8px; /* Adjust the spacing between the icon and text */
+    }
+
+    /* Basic styling for the vertical navigation bar */
+    .vertical-nav {
+        background-color: #adcdff;
+        width: 250px; /* Adjust the width as needed */
+        height: 100%; /* Adjust the height as needed */
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+        /* Style for the navigation links */
+        .vertical-nav ul {
+            list-style-type: none;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .vertical-nav li {
+            margin-bottom: 10px;
+        }
+
+        .vertical-nav a {
+            display: block;
+            font-style: normal;
+            color: #000000;
+            text-decoration: none;
+            font-size: 17px;
+            padding: 10px;
+        }
+
+            /* Change link color on hover */
+            .vertical-nav a:hover {
+                font-style: normal;
+                background-color: #218cff;
+                color: #ffffff;
+                border-radius: 8px;
+                transition: all 0.3s ease-in-out;
+            }
+
+    .home-link {
+        font-size: 16px;
+        color: #007bff;
+        text-decoration: none;
+        /* Add any other desired styles here */
+    }
+
+    .content {
+        margin-left: 270px; /* Adjust this margin to match the width of the vertical-nav */
+        padding: 20px;
+    }
+</style>
+<body>
+    <div class="vertical-nav">
+        <a class="navbar-brand" href="@Url.Action("IndexHome", "Admin", new { area = "" })">
+            <img src="~/Content/Image/Government_of_India_logo.svg.png" alt="Govenment of india"
+                 draggable="false" height="70" width="160" />
+        </a>
+        <ul>
+            <li><a href="@Url.Action("IndexHome", "Admin", new { area = "" })" class="home-link"><i class="fas fa-home icon"></i>Home</a></li>
+            <li><a href="@Url.Action("GetVisa", "Admin",new { area = ""})"><i class="fas fa-plus-circle icon"></i>Create Visa</a></li>
+            @*Session*@
+            <li><a href="@Url.Action("Application", "Admin", new { area = "", statusFilter = "All" })"><i class="fas fa-star icon"></i>Applications</a></li>
+            <li><a href="@Url.Action("GetAllAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>Admin profiles</a></li>
+            <li><a href="@Url.Action("GetAllUser", "Admin", new { area = "" })"><i class="fas fa-users icon"></i>User profiles</a></li>
+            <li><a href="@Url.Action("GetAllVCO", "Admin", new { area = "" })"><i class="fas fa-globe icon"></i>VCO profiles</a></li>
+            <li><a href="@Url.Action("AddAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>Add admin</a></li>
+            @*Session*@
+            <li><a href="@Url.Action("AddVCO", "Admin", new { area = "" })"><i class="fas fa-user-tie icon"></i>Add VCO</a></li>
+            @*Session*@
+            <li><a href="@Url.Action("ChangePassword", "Admin", new { area = "" })"><i class="fas fa-user-lock icon"></i>Change password</a></li>
+            @*Session*@
+            <li><a href="@Url.Action("Profile", "Admin", new { area = "" })"><i class="fas fa-user icon"></i>@(Session["UserName"] != null ? Session["UserName"].ToString() : "No value")</a></li>
+            <li><a href="@Url.Action("SignOut", "Admin", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
+            <li><a href="@Url.Action("ContactUs", "Admin", new { area = "" })"><i class="fas fa-address-book icon"></i>Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    
+</body>
+</html>
+@*
+    Create Visa Type(tourist , business, student ect.)
+    Admin Add Visa Module (According)
+    View all Application-Download
+    View/Edit/Delete Admin profile details
+    View/Edit/Delete User profile details
+    Add new Admin
+    Change Admin Password
+    Logout*@
+

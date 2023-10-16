@@ -1,0 +1,49 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationForm>
+
+@{
+    ViewBag.Title = "Status";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+
+<h2>Status</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.applicationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.visaName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.visaTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.applicationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.visaName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.visaTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+
+    </tr>
+}
+
+</table>

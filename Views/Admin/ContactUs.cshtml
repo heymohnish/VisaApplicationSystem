@@ -1,0 +1,70 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.Contact>
+
+@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Contact us</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    S.no
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Message
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var serialNumber = 1; // Initialize the serial number variable
+
+
+            }
+
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @serialNumber <!-- Display the S.No -->
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.message)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteContact", new { id = item.contactID }, new { @class = "btn btn-dan" })
+                        </td>
+                    </tr>
+                    serialNumber++;
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>

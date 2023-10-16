@@ -1,0 +1,55 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationForm>
+
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Status</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Application ID
+                </th>
+                <th>
+                    Visa name
+                </th>
+                <th>
+                    Remark
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.messageUser)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</body>
+</html>

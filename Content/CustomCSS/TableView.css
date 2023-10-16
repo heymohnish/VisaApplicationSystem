@@ -1,0 +1,80 @@
+﻿/* Style for the table */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+	/* Style for table headers */
+	.table thead {
+		background-color: #333;
+		color: #fff;
+	}
+
+	.table th, .table td {
+		padding: 10px;
+		text-align: left;
+		border: 1px solid #ddd;
+	}
+
+	/* Style for alternating rows */
+	.table tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+/* Style for action buttons */
+.btn-dan {
+	display: inline-block;
+	padding: 8px 16px;
+	background-color: #f20018;
+	color: #fff;
+	text-decoration: none;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+	.btn-dan:hover {
+		background-color: #a60011;
+	}
+	/*primary*/
+.btn-pri {
+	display: inline-block;
+	padding: 8px 16px;
+	background-color: #00abff;
+	color: #fff;
+	text-decoration: none;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+	.btn-pri:hover {
+		background-color: #006aec;
+	}
+
+.custom-button-download {
+	display: inline-block;
+	padding: 7px 14px;
+	background-color: #000000;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	text-align: center;
+	text-decoration: none;
+}
+
+	.custom-button-download .icon {
+		margin-right: 5px; /* Adjust the margin as needed */
+	}
+
+#errorrePassword {
+	color: rgb(255, 71, 71);
+	font-weight: bold;
+	font-size: small;
+}

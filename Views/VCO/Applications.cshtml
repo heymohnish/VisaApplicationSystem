@@ -1,0 +1,69 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationForm>
+
+@{
+    ViewBag.Title = "Applications";
+    Layout = "~/Views/Shared/_LayoutPageVCO.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Submitted application</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                   Applicant ID
+                </th>
+                <th>
+                    Visa name
+                </th>
+                <th>
+                    Visa title
+                </th>
+                <th>
+                    Visa ID
+                </th>
+                <th>
+                    Applicant name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicantName)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("GeneratePDF", new { id = item.applicationID })" class="custom-button-download">
+                            <span class='icon'><i class='fas fa-download'></i></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</body>
+</html>

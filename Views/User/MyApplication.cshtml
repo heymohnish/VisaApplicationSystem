@@ -1,0 +1,61 @@
+﻿@model IEnumerable<VisaApplicationSystem.Models.ApplicationForm>
+
+@{
+    ViewBag.Title = "MyApplication";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/CustomCSS/TableView.css" rel="stylesheet" />
+
+</head>
+<body>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <h2>MyApplication</h2>
+                <th>
+                    Application ID
+                </th>
+                <th>
+                    Visa name
+                </th>
+                <th>
+                    Visa title
+                </th>
+                <th>
+                    Applicant name
+                </th>
+                <th>
+                    Action
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.visaTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.applicantName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "DeleteApplication", new { id = item.applicationID }, new { @class = "btn btn-dan" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
