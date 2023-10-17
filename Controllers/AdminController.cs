@@ -16,7 +16,7 @@ namespace VisaApplicationSystem.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View page</returns>
         [Authorize]
         public ActionResult Index()
         {
@@ -849,6 +849,29 @@ namespace VisaApplicationSystem.Controllers
             HttpContext.Session.Abandon();
             HttpContext.Session.RemoveAll();
             return RedirectToAction("Login", "Login"); // Redirect to the login page
+
+        }
+        [HttpGet]
+        public ActionResult SignOutAdmin()
+        {
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return View();// Redirect to the login page
+
+        }
+        [HttpPost]
+        public ActionResult SignOutAdmin(ForgotPassword forgotPassword)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return RedirectToAction("Login", "Login");
 
         }
 

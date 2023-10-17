@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "SignOutUser";
+    Layout = "~/Views/Shared/_LayoutPageUser.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+</head>
+<script defer type="text/javascript">
+
+
+        function preback() { window.history.forward(); }
+        setTimeout("preback()", 0);
+        window.onunload = function () { null };
+
+</script>
+<body>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Logout" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</body>
+<html>

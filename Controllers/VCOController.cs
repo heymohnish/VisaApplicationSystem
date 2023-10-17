@@ -43,7 +43,13 @@ namespace VisaApplicationSystem.Controllers
             {
                 VCORepository controller = new VCORepository();
 
-                return View(controller.GetSubmitedApplication());
+                var down = controller.GetSubmitedApplication();
+                var user = Session["LoginId"];
+                if(user!=null)
+                {
+                    return View(down);
+                }
+                return RedirectToAction("Index");
 
             }
             catch (Exception ex)
@@ -275,6 +281,25 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
+        [HttpGet]
+        public ActionResult SignOutVco()
+        {
+            return View();// Redirect to the login page
+
+        }
+        [HttpPost]
+        public ActionResult SignOutVco(ForgotPassword forgotPassword)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return RedirectToAction("Login", "Login");
+
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -282,12 +307,14 @@ namespace VisaApplicationSystem.Controllers
         [HttpGet]
         public ActionResult SignOut()
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
             FormsAuthentication.SignOut();
-
             HttpContext.Session.Clear();
             HttpContext.Session.Abandon();
             HttpContext.Session.RemoveAll();
-            return RedirectToAction("Login", "Login"); // Redirect to the login page
+            return RedirectToAction("Index"); // Redirect to the login page
 
         }
         /// <summary>

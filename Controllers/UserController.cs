@@ -739,6 +739,53 @@ namespace VisaApplicationSystem.Controllers
                 return View("Error");
             }
         }
+        [Authorize]
+        [HttpGet]
+        public ActionResult SignOutVco()
+        {
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return View();// Redirect to the login page
+
+        }
+        [HttpPost]
+        public ActionResult SignOutVco(ForgotPassword forgotPassword)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return RedirectToAction("Login", "Login");
+
+        }
+        [HttpGet]
+        public ActionResult SignOutUser()
+        {
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return View();// Redirect to the login page
+
+        }
+        [HttpPost]
+        public ActionResult SignOutUser(ForgotPassword forgotPassword)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
+            return RedirectToAction("Login", "Login");
+
+        }
 
 
     }

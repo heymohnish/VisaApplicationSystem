@@ -38,7 +38,7 @@
             <li><a href="@Url.Action("GeneratePDF", "User", new { area = "" })"><i class="fas fa-download icon"></i>Download</a></li>
             <li><a href="@Url.Action("ChangePassword", "User", new { area = "" })"><i class="fas fa-user-lock icon"></i>Change password</a></li>
             <li><a href="@Url.Action("Profile", "User", new { area = "" })"><i class="fas fa-user icon"></i>@(Session["UserName"] != null ? Session["UserName"].ToString() : "No value")</a></li>
-            <li><a href="@Url.Action("SignOut", "User", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
+            <li><a href="@Url.Action("SignOutUser", "User", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
         </ul>
     </div>
 

@@ -21,6 +21,9 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+                Response.Cache.SetNoStore();
                 return View();
 
             }
@@ -61,6 +64,8 @@ namespace VisaApplicationSystem.Controllers
                         {
                             ViewBag.registrationID = registration.registrationID;
                             FormsAuthentication.SetAuthCookie(login.userName, false);
+                            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                            Response.Cache.SetNoStore();
                             return RedirectToAction("Index", "VCO");
                         }
                         else if (registration.role.Equals("User"))
