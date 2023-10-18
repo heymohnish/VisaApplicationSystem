@@ -14,9 +14,9 @@ namespace VisaApplicationSystem.Controllers
     public class AdminController : Controller
     {
         /// <summary>
-        /// 
+        /// Displays the main page for authorized users.
         /// </summary>
-        /// <returns>View page</returns>
+        /// <returns>The view page for authorized users.</returns>
         [Authorize]
         public ActionResult Index()
         {
@@ -38,9 +38,9 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Displays the home page for authorized users.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page for the home page.</returns>
         [Authorize]
         [HttpGet]
 
@@ -59,9 +59,9 @@ namespace VisaApplicationSystem.Controllers
            
         }
         /// <summary>
-        /// 
+        /// Displays the page for creating a new visa entry.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page for creating a new visa entry.</returns>
         [Authorize]
         [HttpGet]
         public ActionResult CreateVisa()
@@ -80,10 +80,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Processes the creation of a new visa entry based on the provided data.
         /// </summary>
-        /// <param name="visa"></param>
-        /// <returns></returns>
+        /// <param name="visa">The Visa object containing the visa details.</param>
+        /// <returns>A redirection to the "GetVisa" action in the "Admin" controller.</returns>
         [Authorize]
         [HttpPost]
         public ActionResult CreateVisa(Visa visa)
@@ -106,9 +106,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Displays the list of available visa types.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page containing the list of available visa types.</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GetVisa()
@@ -128,12 +128,11 @@ namespace VisaApplicationSystem.Controllers
             
         }
 
-        /* https://localhost:44329/Admin/GetVisa*/
         /// <summary>
-        /// 
+        /// Displays the details of a specific visa type.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The unique identifier of the visa type to retrieve details for.</param>
+        /// <returns>The view page containing the details of the specified visa type.</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Details(int id)
@@ -151,12 +150,11 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
-        /*https://localhost:44329/Admin/Edit/1*/
         /// <summary>
-        /// 
+        /// Displays the details of a specific visa type for edit.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> the uniqe visa id can be edited</param>
+        /// <returns> give webpage with datas</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Edit(int id)
@@ -175,10 +173,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// when we click submit button it carry data to edit th visa
         /// </summary>
-        /// <param name="visa"></param>
-        /// <returns></returns>
+        /// <param name="visa"> Visa model datas</param>
+        /// <returns> redirect to the getvisa</returns>
         [Authorize]
         [HttpPost]
         public ActionResult Edit(Visa visa)
@@ -198,12 +196,11 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
-        /*https://localhost:44329/Admin/Delete/1*/
         /// <summary>
-        /// 
+        /// delete the visa by given id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> carry visa id</param>
+        /// <returns>rediret to the same page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Delete(int id)
@@ -222,9 +219,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display all the admin who enrolled
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page for all the admin details<returns>
         [Authorize]
         [HttpGet]
         public ActionResult GetAllAdmin()
@@ -242,12 +239,11 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
-        // DeleteAdmin
         /// <summary>
-        /// 
+        /// Delete the admin by id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> carry registration id of the admin</param>
+        /// <returns>rediect to the same page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteAdmin(int id)
@@ -266,9 +262,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display all the user one who enrolled
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the view page display all the user</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GetAllUser()
@@ -288,10 +284,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Deletes the user by given id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> unique registration id will be passed</param>
+        /// <returns>The view page return all the user </returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteUser(int id)
@@ -310,9 +306,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display all the VCO who register
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return all the vco</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GetAllVCO()
@@ -330,12 +326,11 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
-        // DeleteAdmin
         /// <summary>
-        /// 
+        /// Delete the VCO fro the given uniqe id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">uniqe registration id will be passed</param>
+        /// <returns> The view page redirect get all vco page </returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteVCO(int id)
@@ -354,9 +349,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display a form for adding new admin
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return form</returns>
         [Authorize]
         [HttpGet]
         public ActionResult AddAdmin()
@@ -382,10 +377,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// once the admin form filled it carry the admin detail
         /// </summary>
-        /// <param name="registration"></param>
-        /// <returns></returns>
+        /// <param name="registration"> model consist of admin data</param>
+        /// <returns>The view page redirct to the admin form fields</returns>
         [Authorize]
         [HttpPost]
         public ActionResult AddAdmin(Registration registration)
@@ -419,9 +414,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display a form for adding new VCO
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return form</returns>
         [Authorize]
         [HttpGet]
         public ActionResult AddVCO()
@@ -447,10 +442,10 @@ namespace VisaApplicationSystem.Controllers
            
         }
         /// <summary>
-        /// 
+        /// once the admin form filled it carry the vco detail
         /// </summary>
-        /// <param name="registration"></param>
-        /// <returns></returns>
+        /// <param name="registration"> model consist of vco data</param>
+        /// <returns>The view page redirct to the vco form fields</returns>
         [Authorize]
         [HttpPost]
         public ActionResult AddVCO(Registration registration)
@@ -482,10 +477,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// intially displays all the application
         /// </summary>
-        /// <param name="statusFilter"></param>
-        /// <returns></returns>
+        /// <param name="statusFilter">intially it consist a string all</param>
+        /// <returns>The view page return application</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Application(string statusFilter)
@@ -515,10 +510,10 @@ namespace VisaApplicationSystem.Controllers
            
         }
         /// <summary>
-        /// 
+        /// Display all the application user submits carys an application id which should be deleted
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> id carrys of application id </param>
+        /// <returns>The view page redirct to the application action</returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteApplication(int id)
@@ -537,10 +532,10 @@ namespace VisaApplicationSystem.Controllers
         
         }
         /// <summary>
-        /// 
+        /// it dosnt display anything returns the file in pdf file format 
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">id carrys application id </param>
+        /// <returns>returns the file in pdf file format</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GeneratePDF(int id)
@@ -560,9 +555,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display a from for typing password
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Display a from for typing password conform password page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult ChangePassword()
@@ -587,10 +582,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display a from for typing password
         /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
+        /// <param name="login"> carrys Login model</param>
+        /// <returns>The view page redirct to the new password page oncethe givven password is correct</returns>
         [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(Login login)
@@ -626,9 +621,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// display froms which is confrom password and new password
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page returns new password page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult NewPassword()
@@ -653,10 +648,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// once the conform password and ne password given it change the pass word 
         /// </summary>
         /// <param name="password"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirct o the change password</returns>
         [Authorize]
         [HttpPost]
         public ActionResult NewPassword(Password password)
@@ -688,9 +683,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// display all the contacted persons faq from the home page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page rturn all the contacted person faqs</returns>
         [Authorize]
         [HttpGet]
         public ActionResult ContactUs()
@@ -708,10 +703,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// display all the contacted persons faq from the home page and delets the given id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> contacted person unique id</param>
+        /// <returns>The view page rturn all the contacted person faqs</returns>
         [Authorize]
         public ActionResult DeleteContact(int id)
         {
@@ -729,9 +724,9 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display the profile of the admin
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page rturn profile</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Profile()
@@ -759,10 +754,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display profile of the admin
         /// </summary>
-        /// <param name="registration"></param>
-        /// <returns></returns>
+        /// <param name="registration">one on press submit it cary data that to be updated</param>
+        /// <returns>The view page rturn admin profile</returns>
         [Authorize]
         [HttpPost]
         public ActionResult Profile(Registration registration)
@@ -789,11 +784,11 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// display profile of the admin
         /// </summary>
         /// <param name="registrationID"></param>
-        /// <param name="file"></param>
-        /// <returns></returns>
+        /// <param name="file"> carry a file formated image</param>
+        /// <returns>The view page rturn admin profile</returns>
         [Authorize]
         [HttpPost]
         public ActionResult UploadPicture(int registrationID, HttpPostedFileBase file)
@@ -824,6 +819,7 @@ namespace VisaApplicationSystem.Controllers
                 return View("Error");
             }
         }
+        //To write error log file
         private void LogError(Exception ex)
         {
             string logPath = Server.MapPath("~/Content/Log/error.log"); // Adjust the path to your log directory
@@ -851,16 +847,22 @@ namespace VisaApplicationSystem.Controllers
             return RedirectToAction("Login", "Login"); // Redirect to the login page
 
         }
+        /// <summary>
+        /// Display an logut button 
+        /// </summary>
+        /// <returns>The view page return logout button page</returns>
         [HttpGet]
         public ActionResult SignOutAdmin()
         {
-            FormsAuthentication.SignOut();
-            HttpContext.Session.Clear();
-            HttpContext.Session.Abandon();
-            HttpContext.Session.RemoveAll();
             return View();// Redirect to the login page
 
         }
+        /// <summary>
+        /// once the button pressed clears all the session and signout auth funtion
+        /// </summary>
+        /// <param name="forgotPassword"></param>
+        /// <returns>The view page return login page</returns>
+
         [HttpPost]
         public ActionResult SignOutAdmin(ForgotPassword forgotPassword)
         {

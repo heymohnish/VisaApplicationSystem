@@ -21,8 +21,16 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                return View();
-
+                
+                int userId;
+                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("SessionTimeOut", "Session");
+                }
             }
             catch (Exception ex)
             {
@@ -41,15 +49,24 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                VCORepository controller = new VCORepository();
-
-                var down = controller.GetSubmitedApplication();
-                var user = Session["LoginId"];
-                if(user!=null)
+               
+                int userId;
+                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
-                    return View(down);
+                    VCORepository controller = new VCORepository();
+
+                    var down = controller.GetSubmitedApplication();
+                    var user = Session["LoginId"];
+                    if (user != null)
+                    {
+                        return View(down);
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                else
+                {
+                    return RedirectToAction("SessionTimeOut", "Session");
+                }
 
             }
             catch (Exception ex)
@@ -69,9 +86,18 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                VCORepository controller = new VCORepository();
+                
+                int userId;
+                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                {
+                    VCORepository controller = new VCORepository();
 
-                return View(controller.GetAllApplication());
+                    return View(controller.GetAllApplication());
+                }
+                else
+                {
+                    return RedirectToAction("SessionTimeOut", "Session");
+                }
 
             }
             catch (Exception ex)
@@ -92,10 +118,19 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                VCORepository repository = new VCORepository();
+                int userId;
+                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                {
+                    VCORepository repository = new VCORepository();
                 ApplicationPayload application = repository.GetApplicationForm(id);
                 return View(application);
-            }
+                }
+                else
+                {
+                    return RedirectToAction("SessionTimeOut", "Session");
+                }
+        }
+
             catch (Exception ex)
             {
                 LogError(ex);
@@ -114,10 +149,18 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                VCORepository repository = new VCORepository();
+                int userId;
+                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                {
+                    VCORepository repository = new VCORepository();
                 repository.UpdateStatus(application);
                 return RedirectToAction("Update");
-
+                }
+                else
+                {
+                    return RedirectToAction("SessionTimeOut", "Session");
+                }
+            
             }
             catch (Exception ex)
             {

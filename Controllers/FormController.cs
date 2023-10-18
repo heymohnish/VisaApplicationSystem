@@ -16,10 +16,10 @@ namespace VisaApplicationSystem.Controllers
             return View();
         }
         /// <summary>
-        /// 
+        /// dosnt display anything its an ajax called action
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns></returns>
+        /// <returns>returns java script object</returns>
         [HttpPost]
         public JsonResult CheckUserNameExists(string userName)
         {
@@ -28,10 +28,10 @@ namespace VisaApplicationSystem.Controllers
             return Json(k);
         }
         /// <summary>
-        /// 
+        /// dosnt display anything its an ajax called action
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns></returns>
+        /// <returns>returns java script object</returns>
         [HttpPost]
         public JsonResult CheckEmailExists(string userName)
         {
@@ -40,10 +40,10 @@ namespace VisaApplicationSystem.Controllers
             return Json(k);
         }
         /// <summary>
-        /// 
+        /// dosnt display anything its an ajax called action
         /// </summary>
         /// <param name="country"></param>
-        /// <returns></returns>
+        /// <returns>returns java script object</returns>
         [HttpGet]
         public JsonResult GetStates(string country)
         {
@@ -51,6 +51,10 @@ namespace VisaApplicationSystem.Controllers
             var states = validationRepository.GetStates(country);
             return Json(states, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// dosnt display anything its an ajax called action
+        /// </summary>
+        /// <returns>returns java script object</returns>
         [HttpGet]
         public JsonResult GetCountry()
         {
@@ -58,7 +62,11 @@ namespace VisaApplicationSystem.Controllers
             var country = validationRepository.GetCountry();
             return Json(country, JsonRequestBehavior.AllowGet);
         }
-
+        /// <summary>
+        /// dosnt display anything its an ajax called action
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns>returns java script object</returns>
         [HttpGet]
         public JsonResult GetCities(string state)
         {

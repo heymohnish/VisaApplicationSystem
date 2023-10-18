@@ -3,18 +3,20 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <!-- Include Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">*@
     <script>
-    function refreshPage() {
-        location.reload();
-    }
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
+        function refreshPage() {
+            location.reload();
         }
-    });
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+            }
+        });
     </script>
 </head>
 <style>
@@ -75,8 +77,86 @@
         margin-left: 270px; /* Adjust this margin to match the width of the vertical-nav */
         padding: 20px;
     }
+    /* The dropdown container */
+    .dropdown {
+        float: left;
+        overflow: hidden;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        width: 230px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        /* Dropdown button */
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: 2px;
+            outline: none;
+            color: white;
+            padding: inherit;
+            background-color: inherit;
+            font-family: inherit; /* Important for vertical align on mobile phones */
+            margin: 10px;
+           transform-box:view-box;/* Important for vertical align on mobile phones */
+        }
+
+        /* Add a red background color to navbar links on hover */
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: red;
+            padding: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+    .icon-right {
+        margin-left: 100px; /* Adjust the spacing as needed */
+    }
+    .icon-right-a {
+        margin-left: 54px;
+    }
+    .icon-right-b {
+        margin-left: 65px;
+    }
+    .icon-right-c {
+        margin-left: 69px;
+    }
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        padding: 5px;
+        display: none;
+        position: fixed;
+        background-color: aliceblue;
+        width: 180px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+        z-index: 3;
+        left: 50px; /* This ensures the left edge of the dropdown aligns with the parent element */
+        right: auto;
+        border-radius: 8px 8px;
+        float: left;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            transition: all 0.3s ease-in-out;
+            float: none;
+            color: black;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            /* Add a grey background color to dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color:dimgray;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
 </style>
 <body>
+   @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*@
     <div class="vertical-nav">
         <a class="navbar-brand" href="@Url.Action("IndexHome", "Admin", new { area = "" })">
             <img src="~/Content/Image/Government_of_India_logo.svg.png" alt="Govenment of india"
@@ -86,36 +166,88 @@
             <li><a href="@Url.Action("IndexHome", "Admin", new { area = "" })" class="home-link"><i class="fas fa-home icon"></i>Home</a></li>
             <li><a href="@Url.Action("GetVisa", "Admin",new { area = ""})"><i class="fas fa-plus-circle icon"></i>Create Visa</a></li>
             @*Session*@
-            <li><a href="@Url.Action("Application", "Admin", new { area = "", statusFilter = "All" })"><i class="fas fa-star icon"></i>Applications</a></li>
-            <li><a href="@Url.Action("GetAllAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>Admin profiles</a></li>
-            <li><a href="@Url.Action("GetAllUser", "Admin", new { area = "" })"><i class="fas fa-users icon"></i>User profiles</a></li>
-            <li><a href="@Url.Action("GetAllVCO", "Admin", new { area = "" })"><i class="fas fa-globe icon"></i>VCO profiles</a></li>
-            <li><a href="@Url.Action("AddAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>Add admin</a></li>
-            @*Session*@
-            <li><a href="@Url.Action("AddVCO", "Admin", new { area = "" })"><i class="fas fa-user-tie icon"></i>Add VCO</a></li>
-            @*Session*@
-            <li><a href="@Url.Action("ChangePassword", "Admin", new { area = "" })"><i class="fas fa-user-lock icon"></i>Change password</a></li>
-            @*Session*@
-            <li><a href="@Url.Action("Profile", "Admin", new { area = "" })"><i class="fas fa-user icon"></i>@(Session["UserName"] != null ? Session["UserName"].ToString() : "No value")</a></li>
-            <li><a href="@Url.Action("SignOutAdmin", "Admin", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
-            <li><a href="@Url.Action("ContactUs", "Admin", new { area = "" })"><i class="fas fa-address-book icon"></i>Contact</a></li>
+
+            @*Admin console*@
+            <li class="dropdown">
+                <a><i class="fas fa-user-secret icon"></i>Admin console <i class="fas fa-chevron-down icon-right-a"></i></a>
+
+                <div class="dropdown-content">
+                    <a href="@Url.Action("AddAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>Add admin</a>
+                    <a href="@Url.Action("GetAllAdmin", "Admin", new { area = "" })"><i class="fas fa-user-cog icon"></i>View admin</a>
+                </div>
+            </li>
+            @*VCO profile*@
+            <li class="dropdown">
+                <a><i class="fas fa-user-tie icon"></i>VCO console <i class="fas fa-chevron-down icon-right-b"></i></a>
+
+                <div class="dropdown-content">
+                    <a href="@Url.Action("AddVCO", "Admin", new { area = "" })"><i class="fas fa-user-tie icon"></i>Add VCO</a>
+                    <a href="@Url.Action("GetAllVCO", "Admin", new { area = "" })"><i class="fas fa-globe icon"></i>VCO profiles</a>
+                </div>
+            </li>
+            @*user*@
+            <li class="dropdown">
+                <a><i class="fas fa-user icon"></i>User console <i class="fas fa-chevron-down icon-right-c"></i></a>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Application", "Admin", new { area = "", statusFilter = "All" })"><i class="fas fa-star icon"></i>User applications</a>
+                    <a href="@Url.Action("GetAllUser", "Admin", new { area = "" })"><i class="fas fa-users icon"></i>User profiles</a>
+                </div>
+            </li>
+            @*profile*@
+            <li class="dropdown">
+                <a><i class="fas fa-cogs icon"></i>Settings<i class="icon fas fa-chevron-down icon-right"></i></a>
+
+                <div class="dropdown-content">
+                    <a href="@Url.Action("Profile", "Admin", new { area = "" })"><i class="fas fa-user icon"></i>Edit profile</a>
+                    <a href="@Url.Action("ChangePassword", "Admin", new { area = "" })"><i class="fas fa-user-lock icon"></i>Change password</a>
+                    <a href="@Url.Action("SignOutAdmin", "Admin", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+                </div>
+            </li>
+            <div>
+            <li class="dropdown"><a href="@Url.Action("ContactUs", "Admin", new { area = "" })"><i class="fas fa-address-book icon"></i>FAQ  </a></liclass="dropdown">
+            </div>
         </ul>
-    </div>
+            @*Session*@
+            <!--<li><a href="@Url.Action("AddVCO", "Admin", new { area = "" })"><i class="fas fa-user-tie icon"></i>Add VCO</a></li>-->
+            @*Session*@
+            <!--<li><a href="@Url.Action("ChangePassword", "Admin", new { area = "" })"><i class="fas fa-user-lock icon"></i>Change password</a></li>-->
+            @*Session*@
+            <!--<li><a href="@Url.Action("Profile", "Admin", new { area = "" })"><i class="fas fa-user icon"></i>@(Session["UserName"] != null ? Session["UserName"].ToString() : "No value")</a></li>
+    <li><a href="@Url.Action("SignOutAdmin", "Admin", new { area = "" })"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
+    <li><a href="@Url.Action("ContactUs", "Admin", new { area = "" })"><i class="fas fa-address-book icon"></i>Contact</a></li>-->
+        
+        </div>
 
-    <div class="content">
-        @RenderBody()
-    </div>
+        <div class="content">
+            @RenderBody()
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Toggle dropdown on button click
+                $("#toggleDropdown").click(function () {
+                    $("#navbarNav").toggleClass("show");
+                });
 
-    
-</body>
-</html>
-@*
-    Create Visa Type(tourist , business, student ect.)
-    Admin Add Visa Module (According)
-    View all Application-Download
-    View/Edit/Delete Admin profile details
-    View/Edit/Delete User profile details
-    Add new Admin
-    Change Admin Password
-    Logout*@
+                // Close the dropdown when clicking outside
+                $(document).click(function (e) {
+                    if (!$(e.target).closest(".navbar").length) {
+                        $("#navbarNav").removeClass("show");
+                    }
+                });
+            });
+        </script>
+
+
+    </body>
+    </html>
+    @*
+        Create Visa Type(tourist , business, student ect.)
+        Admin Add Visa Module (According)
+        View all Application-Download
+        View/Edit/Delete Admin profile details
+        View/Edit/Delete User profile details
+        Add new Admin
+        Change Admin Password
+        Logout*@
 

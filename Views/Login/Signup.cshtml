@@ -30,6 +30,29 @@
 }
     </script>
 </head>
+<style>
+    input[type="submit"] {
+        background-color: #e00909;
+        color: white;
+        width: 300px;
+        border-radius: 10px;
+        border-color: white;
+        padding: 5px 75px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        /* Green */
+    }
+
+        input[type="submit"]:hover {
+            background-color: rgb(182, 0, 0);
+            color: white;
+        }
+</style>
 <body>
     <div class="center-fieldset">
         <div id="para2">
@@ -37,75 +60,75 @@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-                    <form>
-                        <h4>Sign up</h4>
-                        <input type="text" id="fname" name="firstName" onblur="onBlurName()" placeholder="First name*"><br>
-                        <div id="errorName">
-                            @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
-                        </div>
+                <form>
+                    <h4>Sign up</h4>
+                    <input type="text" id="fname" name="firstName" onblur="onBlurName()" placeholder="First name*"><br>
+                    <div id="errorName">
+                        @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                    </div>
 
-                        <input type="text" id="lname" name="lastName" onblur="onBlurNameLast()" placeholder="Last name*"><br>
-                        <div id="errorLname">
-                            @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
-                        </div>
+                    <input type="text" id="lname" name="lastName" onblur="onBlurNameLast()" placeholder="Last name*"><br>
+                    <div id="errorLname">
+                        @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                    </div>
 
-                        <input type="date" id="DOB" name="dob" placeholder="Date of Birth*" onclick="setMinDate()" onblur="calculateAge()">
-                        <input type="number" id="age" name="age" placeholder="Age*" readonly><br>
-                        <div id="errorAge">
-                            @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
-                        </div><br>
+                    <input type="date" id="DOB" name="dob" placeholder="Date of Birth*" onclick="setMinDate()" onblur="calculateAge()">
+                    <input type="number" id="age" name="age" placeholder="Age*" readonly><br>
+                    <div id="errorAge">
+                        @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+                    </div><br>
 
-                        Gender*:
-                        <input type="radio" id="m" name="gender" value="male">
-                        <label for="m">Male</label>
-                        <input type="radio" id="f" name="gender" value="female">
-                        <label for="f">Female</label>
-                        <input type="radio" id="o" name="gender" value="other">
-                        <label for="o">Other</label><br><br>
+                    Gender*:
+                    <input type="radio" id="m" name="gender" value="male">
+                    <label for="m">Male</label>
+                    <input type="radio" id="f" name="gender" value="female">
+                    <label for="f">Female</label>
+                    <input type="radio" id="o" name="gender" value="other">
+                    <label for="o">Other</label><br><br>
 
-                        <input type="number" id="phone" name="phone" placeholder="Phone*" maxlength="10" pattern="[0-9]+" onblur="validPhone(this)"><br>
-                        <div id="errorPhone">
-                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
-                        </div>
+                    <input type="number" id="phone" name="phone" placeholder="Phone*" maxlength="10" pattern="[0-9]+" onblur="validPhone(this)"><br>
+                    <div id="errorPhone">
+                        @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                    </div>
 
-                        <input type="text" id="email" name="email" placeholder="Email*" onblur="onBlurEmail12()"><br>
-                        <div id="errorMail">
-                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-                        </div>
+                    <input type="text" id="email" name="email" placeholder="Email*" onblur="onBlurEmail12()"><br>
+                    <div id="errorMail">
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    </div>
 
-                        <input type="text" id="address" name="address" placeholder="Address*" onblur="onBlurMessage(this)" onkeydown="onKeyMessage(this)"><br>
-                        <div id="errorMessage">
-                            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
-                        </div>
-                        @*Country*@
-                        @Html.DropDownListFor(model => model.country, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select Country", new { @class = "form-control", id = "countryDropdown" })
-                        @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
-                        @*State*@
-                        @Html.DropDownListFor(model => model.state, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select State", new { @class = "form-control", id = "stateDropdown" })
-                        @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
-                        @*City*@
-                        @Html.DropDownListFor(model => model.city, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select City", new { @class = "form-control", id = "cityDropdown" })
-                        @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
-                        <input type="text" id="username" name="username" placeholder="Username*" onblur="onBlurUser1()"><br>
-                        <div id="errorUserName">
-                            @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
-                        </div>
-                        <input type="password" id="password" name="password" placeholder="Password*" onblur="validatePassword()"><br>
-                        <div id="errorPassword">
-                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                        </div>
+                    <input type="text" id="address" name="address" placeholder="Address*" onblur="onBlurMessage(this)" onkeydown="onKeyMessage(this)"><br>
+                    <div id="errorMessage">
+                        @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                    </div>
+                    @*Country*@
+                    @Html.DropDownListFor(model => model.country, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select Country", new { @class = "form-control", id = "countryDropdown" })
+                    @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+                    @*State*@
+                    @Html.DropDownListFor(model => model.state, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select State", new { @class = "form-control", id = "stateDropdown" })
+                    @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                    @*City*@
+                    @Html.DropDownListFor(model => model.city, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select City", new { @class = "form-control", id = "cityDropdown" })
+                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                    <input type="text" id="username" name="username" placeholder="Username*" onblur="onBlurUser1()"><br>
+                    <div id="errorUserName">
+                        @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="Password*" onblur="validatePassword()"><br>
+                    <div id="errorPassword">
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </div>
 
-                        <input type="password" id="repassword" name="repassword" placeholder="Confirm Password*" onblur="checkRepass()"><br>
-                        <div id="errorrePassword"></div>
-                        <div style="padding-left:100px;">
-                            <a class="form-control-lg col-md-10" href="Login"
-                               target="_blank" style="font-size:smaller;">Already have an account?</a><br><br>
-                        </div>
+                    <input type="password" id="repassword" name="repassword" placeholder="Confirm Password*" onblur="checkRepass()"><br>
+                    <div id="errorrePassword"></div>
 
 
-                        <input type="submit" value="Signup" name="Signup" placeholder="Sign up" onclick="validateEmail()">
 
-                    </form>
+                    <input type="submit" id="submit" value="Signup" name="Signup" placeholder="Sign up" onclick="validateEmail()">
+                    <div style="padding-left:100px;">
+                        <a class="form-control-lg col-md-10" href="Login"
+                           target="_blank" style="font-size:smaller;">Already have an account?</a><br><br>
+                    </div>
+                </form>
                 }
             </fieldset>
         </div>

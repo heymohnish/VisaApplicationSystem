@@ -116,14 +116,8 @@ select {
 	border-radius: 4px;
 	box-sizing: border-box;
 }
-
-input[type="checkbox"]:focus {
-	outline: max(1px, 0.15em) solid currentColor;
-	outline-offset: max(5px, 0.1em);
-}
-
 input[type="submit"] {
-	background-color: rgb(255, 72, 72);
+	background-color:aqua;
 	color: white;
 	border-radius: 10px;
 	border-color: white;
@@ -142,6 +136,13 @@ input[type="submit"] {
 		background-color: rgb(182, 0, 0);
 		color: white;
 	}
+
+input[type="checkbox"]:focus {
+	outline: max(1px, 0.15em) solid currentColor;
+	outline-offset: max(5px, 0.1em);
+}
+
+
 
 .foow {
 	background-color: #9c9c9c;

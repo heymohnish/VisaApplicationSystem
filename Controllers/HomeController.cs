@@ -12,9 +12,9 @@ namespace VisaApplicationSystem.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// 
+        /// Display home page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return home page</returns>
         public ActionResult Index()
         {
             try
@@ -29,9 +29,9 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display About us page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return about page</returns>
         public ActionResult About()
         {
             try
@@ -48,9 +48,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display Contact us page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return contact us page</returns>
         [HttpGet]
         public ActionResult Contact()
         {
@@ -69,10 +69,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display Contact us page
         /// </summary>
         /// <param name="contact"></param>
-        /// <returns></returns>
+        /// <returns>The view page return contact us page</returns>
         [HttpPost]
         public ActionResult Contact(Contact contact)
         {
@@ -92,9 +92,9 @@ namespace VisaApplicationSystem.Controllers
            
         }
         /// <summary>
-        /// 
+        /// Display Forgot password page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return forgot password page</returns>
         [HttpGet]
         public ActionResult ForgetPassword()
         {
@@ -110,10 +110,10 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        /// Display Forgot password page
         /// </summary>
         /// <param name="forgotPassword"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the login page</returns>
         [HttpPost]
         public ActionResult ForgetPassword(ForgotPassword forgotPassword)
         {
@@ -130,6 +130,7 @@ namespace VisaApplicationSystem.Controllers
             }
 
         }
+        //error log file write
         private void LogError(Exception ex)
         {
             string logPath = Server.MapPath("~/Content/Log/error.log"); // Adjust the path to your log directory

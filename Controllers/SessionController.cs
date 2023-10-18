@@ -9,16 +9,15 @@ namespace VisaApplicationSystem.Controllers
     public class SessionController : Controller
     {
         // GET: Session
-        public ActionResult Index()
-        {
-            return View();
-        }
+        /// <summary>
+        /// Once the session expire it will redirect to this page
+        /// </summary>
+        /// <returns> The view page return session time out page</returns>
         [HttpGet]
         public ActionResult SessionTimeOut()
         {
             return View();
         }
-        //
     }
 
 }

@@ -14,9 +14,9 @@ namespace VisaApplicationSystem.Controllers
     {
         // GET: Login
         /// <summary>
-        /// 
+        /// Display an login page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return login page</returns>
         public ActionResult Login()
         {
             try
@@ -34,10 +34,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display Login page
         /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
+        /// <param name="login">xarrys user name and password</param>
+        /// <returns>The view page return index page according to the role</returns>
         [HttpPost]
         public ActionResult Login(Login login)
         {
@@ -64,8 +64,7 @@ namespace VisaApplicationSystem.Controllers
                         {
                             ViewBag.registrationID = registration.registrationID;
                             FormsAuthentication.SetAuthCookie(login.userName, false);
-                            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                            Response.Cache.SetNoStore();
+
                             return RedirectToAction("Index", "VCO");
                         }
                         else if (registration.role.Equals("User"))
@@ -87,9 +86,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Sisplay Signup page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return sign up page</returns>
         [HttpGet]
         public ActionResult Signup()
         {
@@ -105,10 +104,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display sigup page
         /// </summary>
-        /// <param name="registration"></param>
-        /// <returns></returns>
+        /// <param name="registration">carrys registration model</param>
+        /// <returns>The view page return to the login page after succefull registration as an user</returns>
         [HttpPost]
         public ActionResult Signup(Registration registration)
         {
@@ -130,6 +129,7 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
+        //error log file
         private void LogError(Exception ex)
         {
             string logPath = Server.MapPath("~/Content/Log/error.log"); // Adjust the path to your log directory

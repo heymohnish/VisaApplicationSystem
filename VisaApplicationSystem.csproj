@@ -211,6 +211,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Log\error.log" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\CustomScript\AdminLayoutPage.js" />
     <Content Include="Scripts\CustomScript\ContactusValidation.js" />
     <Content Include="Scripts\CustomScript\CountryDropDown.js" />
     <Content Include="Scripts\CustomScript\Registration.js" />
