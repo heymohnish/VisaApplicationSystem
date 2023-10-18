@@ -14,18 +14,18 @@ namespace VisaApplicationSystem.Controllers
     {
         // GET: User
         /// <summary>
-        /// 
+        /// Display welcome page with session user name
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return user home page</returns>
         [Authorize]
         public ActionResult UserIndex()
         {
             return View();
         }
         /// <summary>
-        /// 
+        ///  Display application page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return apply visa page </returns>
         [Authorize]
         public ActionResult ApplyVisa()
         {
@@ -53,10 +53,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        ///  Display aplication page
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The view page return application form page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult VisaApply(int id)
@@ -103,11 +103,11 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        ///  Display visa appliy page
         /// </summary>
-        /// <param name="application"></param>
-        /// <param name="submitButton"></param>
-        /// <returns></returns>
+        /// <param name="application">carry application model data</param>
+        /// <param name="submitButton">divide accouding to the button value</param>
+        /// <returns>The view page redirect to apply visa page</returns>
         [Authorize]
         [HttpPost]
         public ActionResult VisaApply(ApplicationForm application, string submitButton)
@@ -143,10 +143,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        ///  Display draft application page
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">carry application data</param>
+        /// <returns>The view page return json bool treu</returns>
         [Authorize]
         public ActionResult Draft(ApplicationForm model)
         {
@@ -176,9 +176,9 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        /// display app the application for the given user
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return all application according to the user</returns>
         [Authorize]
         [HttpGet] 
         public ActionResult MyApplication()
@@ -206,9 +206,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display all the application with status
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return all application with status</returns>
         [Authorize]
         [HttpGet]
         public ActionResult CheckStatus()
@@ -237,9 +237,9 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        /// display application with message
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return application message which was remarked by vco</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Message()
@@ -268,9 +268,9 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        /// Display all the draft application
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return draft application for the uniqe user</returns>
         [Authorize]
         [HttpGet]
         public ActionResult DraftApplication()
@@ -298,10 +298,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// display edit page
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The view page return applicaton edit page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult EditDraft(int id)
@@ -330,10 +330,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display edit draft page
         /// </summary>
         /// <param name="application"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the draft application page</returns>
         [Authorize]
         [HttpPost]
         public ActionResult EditDraft(ApplicationPayload application)
@@ -363,10 +363,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// display all the draft application
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the draft aplication page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteDraft(int id)
@@ -394,9 +394,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// display all the application 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>>The view page return all the application for the uniiqe user</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GeneratePDF()
@@ -423,10 +423,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// dosein display anything return file
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>>The view page return pdf file fro the uniqe application id</returns>
         [Authorize]
         [HttpGet]
         public ActionResult GeneratePDFM(int id)
@@ -448,10 +448,10 @@ namespace VisaApplicationSystem.Controllers
 
         }
         /// <summary>
-        /// 
+        /// display all the application
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>>The view page redirect my applicaton page adter successful deletion of application</returns>
         [Authorize]
         [HttpGet]
         public ActionResult DeleteApplication(int id)
@@ -470,9 +470,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display change password page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>>The view page return change password page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult ChangePassword()
@@ -498,10 +498,10 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display change password page
         /// </summary>
         /// <param name="login"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the new password page after valid password typed</returns>
         [Authorize]
         [HttpPost]
         public ActionResult ChangePassword(Login login)
@@ -537,9 +537,9 @@ namespace VisaApplicationSystem.Controllers
             
         }
         /// <summary>
-        /// 
+        /// Display new password page
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return new password page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult NewPassword()
@@ -563,11 +563,11 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
-        /// <summary>
+        /// <summary>Display new password page
         /// 
         /// </summary>
         /// <param name="password"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the change password page</returns>
         [Authorize]
         [HttpPost]
         public ActionResult NewPassword(Password password)
@@ -598,55 +598,14 @@ namespace VisaApplicationSystem.Controllers
             }
             
         }
+
+
+
+
         /// <summary>
-        /// 
+        /// Display profile
         /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet]
-        public ActionResult error()
-        {
-            try
-            {
-                throw new Exception("Hello");
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-                return View("Error");
-            }
-        }
-
-        private void LogError(Exception ex)
-        {
-            string logPath = Server.MapPath("~/Content/Log/error.log"); // Adjust the path to your log directory
-
-            using (StreamWriter writer = new StreamWriter(logPath, true))
-            {
-                writer.WriteLine($"[{DateTime.Now}] Error: {ex.Message}");
-                writer.WriteLine($"Stack Trace: {ex.StackTrace}");
-                writer.WriteLine();
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult SignOut()
-        {
-            FormsAuthentication.SignOut();
-
-            HttpContext.Session.Clear();
-            HttpContext.Session.Abandon();
-            HttpContext.Session.RemoveAll();
-            return RedirectToAction("Login", "Login"); // Redirect to the login page
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        /// <returns>The view page return user profile page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult Profile()
@@ -674,10 +633,10 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display profile
         /// </summary>
         /// <param name="registration"></param>
-        /// <returns></returns>
+        /// <returns>The view page redirect to the profile page</returns>
         [Authorize]
         [HttpPost]
         public ActionResult Profile(Registration registration)
@@ -704,11 +663,11 @@ namespace VisaApplicationSystem.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Display profile
         /// </summary>
         /// <param name="registrationID"></param>
         /// <param name="file"></param>
-        /// <returns></returns>
+        /// <returns>The view page return redirct to the profile page of the user</returns>
         [Authorize]
         [HttpPost]
         public ActionResult UploadPicture(int registrationID, HttpPostedFileBase file)
@@ -739,6 +698,10 @@ namespace VisaApplicationSystem.Controllers
                 return View("Error");
             }
         }
+        /// <summary>
+        /// Display sogn out button
+        /// </summary>
+        /// <returns>The view page return sign out page</returns>
         [Authorize]
         [HttpGet]
         public ActionResult SignOutVco()
@@ -750,6 +713,11 @@ namespace VisaApplicationSystem.Controllers
             return View();// Redirect to the login page
 
         }
+        /// <summary>
+        /// display sign out button
+        /// </summary>
+        /// <param name="forgotPassword"></param>
+        /// <returns>The view page redirect to the login page</returns>
         [HttpPost]
         public ActionResult SignOutVco(ForgotPassword forgotPassword)
         {
@@ -763,28 +731,16 @@ namespace VisaApplicationSystem.Controllers
             return RedirectToAction("Login", "Login");
 
         }
-        [HttpGet]
-        public ActionResult SignOutUser()
+        private void LogError(Exception ex)
         {
-            FormsAuthentication.SignOut();
-            HttpContext.Session.Clear();
-            HttpContext.Session.Abandon();
-            HttpContext.Session.RemoveAll();
-            return View();// Redirect to the login page
+            string logPath = Server.MapPath("~/Content/Log/error.log"); // Adjust the path to your log directory
 
-        }
-        [HttpPost]
-        public ActionResult SignOutUser(ForgotPassword forgotPassword)
-        {
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
-            Response.Cache.SetNoStore();
-            FormsAuthentication.SignOut();
-            HttpContext.Session.Clear();
-            HttpContext.Session.Abandon();
-            HttpContext.Session.RemoveAll();
-            return RedirectToAction("Login", "Login");
-
+            using (StreamWriter writer = new StreamWriter(logPath, true))
+            {
+                writer.WriteLine($"[{DateTime.Now}] Error: {ex.Message}");
+                writer.WriteLine($"Stack Trace: {ex.StackTrace}");
+                writer.WriteLine();
+            }
         }
 
 
