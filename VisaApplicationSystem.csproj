@@ -150,6 +150,7 @@
     <Compile Include="Models\Password.cs" />
     <Compile Include="Models\PersonalDetail.cs" />
     <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\RoleBase.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Visa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -177,11 +178,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomCSS\ChangePassword.css" />
     <Content Include="Content\CustomCSS\ContactUs.css" />
+    <Content Include="Content\CustomCSS\CreateVisa.css" />
+    <Content Include="Content\CustomCSS\ForgotPassword.css" />
     <Content Include="Content\CustomCSS\HomePage.css" />
     <Content Include="Content\CustomCSS\LayoutVCO.css" />
+    <Content Include="Content\CustomCSS\LogIn.css" />
     <Content Include="Content\CustomCSS\Registration.css" />
     <Content Include="Content\CustomCSS\SignUp.css" />
+    <Content Include="Content\CustomCSS\SignUpC.css" />
     <Content Include="Content\CustomCSS\TableView.css" />
     <Content Include="Content\CustomCSS\UserLayout.css" />
     <Content Include="Content\Image\68747470733a2f2f74697073792e6769746875622e696f2f627562626c792d62672f627562626c792e676966.gif" />
@@ -212,9 +218,14 @@
     <Content Include="Content\Log\error.log" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CustomScript\AdminLayoutPage.js" />
+    <Content Include="Scripts\CustomScript\ChangePassword.js" />
     <Content Include="Scripts\CustomScript\ContactusValidation.js" />
     <Content Include="Scripts\CustomScript\CountryDropDown.js" />
+    <Content Include="Scripts\CustomScript\ForgotPassword.js" />
+    <Content Include="Scripts\CustomScript\LogIn.js" />
+    <Content Include="Scripts\CustomScript\NewPassword.js" />
     <Content Include="Scripts\CustomScript\Registration.js" />
+    <Content Include="Scripts\CustomScript\ScriptComonNull.js" />
     <Content Include="Scripts\CustomScript\SignUp.js" />
     <Content Include="Scripts\CustomScript\Validation.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -251,8 +262,6 @@
     <Content Include="Views\Admin\IndexHome.cshtml" />
     <Content Include="Views\Admin\CreateVisa.cshtml" />
     <Content Include="Views\Admin\GetVisa.cshtml" />
-    <Content Include="Views\Admin\Detail.cshtml" />
-    <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\GetAllAdmin.cshtml" />
     <Content Include="Views\Admin\GetAllUser.cshtml" />
@@ -295,7 +304,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Video\" />
-    <Folder Include="Views\Form\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

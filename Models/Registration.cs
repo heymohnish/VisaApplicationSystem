@@ -28,6 +28,7 @@ namespace VisaApplicationSystem.Models
         public bool isVerified { get; set; }
         public byte[] photo { get; set; }  
         public int adminID { get; set; }
+        public RoleBase roleBase { get; set; }  
 
 
 

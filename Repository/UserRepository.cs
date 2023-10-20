@@ -19,6 +19,13 @@ namespace VisaApplicationSystem.Repository
 {
     public class UserRepository: BaseDatabaseConnection
     {
+        /// <summary>
+        /// Retrieves a list of Visa types from the database.
+        /// </summary>
+        /// <returns>
+        /// Returns a list of Visa objects representing different Visa types.
+        /// </returns>
+
         public List<Visa> GetAllVisaTypes()
         {
             List<Visa> visaTypes = new List<Visa>();
@@ -64,6 +71,14 @@ namespace VisaApplicationSystem.Repository
 
             return visaTypes;
         }
+        /// <summary>
+        /// Retrieves a specific Visa type from the database based on the provided Visa ID.
+        /// </summary>
+        /// <param name="id">The ID of the Visa type to retrieve.</param>
+        /// <returns>
+        /// Returns a Visa object representing the specified Visa type if found; otherwise, null.
+        /// </returns>
+
         public Visa GetAllVisaTypeById(int id)
         {
             Visa visaType = null;
@@ -115,6 +130,10 @@ namespace VisaApplicationSystem.Repository
 
            
         }
+        /// <summary>
+        /// Creates a new application in the database based on the provided ApplicationForm model.
+        /// </summary>
+        /// <param name="model">The ApplicationForm model containing the application information to be inserted.</param>
 
         public void CreateApplication(ApplicationForm model)
         {
@@ -253,7 +272,6 @@ namespace VisaApplicationSystem.Repository
                     command.Parameters.AddWithValue("@MessageVCO", applicationDB.messageVCO ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@MessageUser", applicationDB.messageUser ?? (object)DBNull.Value);
                     // Add similar handling for other parameters
-
                     command.ExecuteNonQuery();
                 }
             }
@@ -263,6 +281,11 @@ namespace VisaApplicationSystem.Repository
             }
 
         }
+        /// <summary>
+        /// Retrieves a list of applications associated with a specific user based on their user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user for which to retrieve applications.</param>
+        /// <returns>Returns a list of ApplicationForm objects representing the user's applications.</returns>
 
         public List<ApplicationForm> GetApplicationByUserID(int userId)
         {
@@ -299,9 +322,7 @@ namespace VisaApplicationSystem.Repository
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
+                return applications;
                 // Handle any exceptions here
             }
             finally
@@ -309,8 +330,14 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
 
-            return applications;
+
         }
+        /// <summary>
+        /// Generates PDF documents for applications associated with a specific user based on their user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user for which to generate PDFs for applications.</param>
+        /// <returns>Returns a list of ApplicationForm objects representing the user's applications for which PDFs are generated.</returns>
+
         public List<ApplicationForm> GeneratePdf(int userId)
         {
             List<ApplicationForm> applications = new List<ApplicationForm>();
@@ -347,10 +374,6 @@ namespace VisaApplicationSystem.Repository
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
-            }
             finally
             {
                 connection.Close();
@@ -358,6 +381,12 @@ namespace VisaApplicationSystem.Repository
 
             return applications;
         }
+        /// <summary>
+        /// Retrieves a list of application messages associated with a specific user based on their user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user for which to retrieve application messages.</param>
+        /// <returns>Returns a list of ApplicationForm objects representing application messages for the user.</returns>
+
         public List<ApplicationForm> GetApplicationMessage(int userId)
         {
             List<ApplicationForm> applications = new List<ApplicationForm>();
@@ -390,10 +419,6 @@ namespace VisaApplicationSystem.Repository
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
-            }
             finally
             {
                 connection.Close();
@@ -401,6 +426,12 @@ namespace VisaApplicationSystem.Repository
 
             return applications;
         }
+        /// <summary>
+        /// Retrieves a list of application drafts associated with a specific user based on their user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user for which to retrieve application drafts.</param>
+        /// <returns>Returns a list of ApplicationForm objects representing application drafts for the user.</returns>
+
         public List<ApplicationForm> GetApplicationDraft(int userId)
         {
             List<ApplicationForm> applications = new List<ApplicationForm>();
@@ -435,10 +466,6 @@ namespace VisaApplicationSystem.Repository
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
-            }
             finally
             {
                 connection.Close();
@@ -446,6 +473,10 @@ namespace VisaApplicationSystem.Repository
 
             return applications;
         }
+        /// <summary>
+        /// Deletes an application from the database by its unique ID.
+        /// </summary>
+        /// <param name="id">The ID of the application to be deleted.</param>
 
         public void DeleteApplication(int id)
         {
@@ -466,15 +497,15 @@ namespace VisaApplicationSystem.Repository
                     
                 }
             }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
-            }
             finally
             {
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Changes the password for a user and updates it in the database.
+        /// </summary>
+        /// <param name="password">A Password object containing the user's new password and registration ID.</param>
 
         public void NewPassword(Password password)
         {
@@ -503,6 +534,11 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Updates an existing application draft in the database with the information provided in the ApplicationPayload object.
+        /// </summary>
+        /// <param name="applicationDB">An ApplicationPayload object containing the updated application draft information.</param>
+
         public void DraftApplication(ApplicationPayload applicationDB)
         {
             {
@@ -933,11 +969,6 @@ namespace VisaApplicationSystem.Repository
                         // Add a line break for spacing
 
                     }
-
-
-
-
-
                     document.Close();
                     return stream.ToArray();
                 }

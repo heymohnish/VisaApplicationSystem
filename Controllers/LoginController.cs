@@ -9,7 +9,7 @@ using VisaApplicationSystem.Models;
 using VisaApplicationSystem.Repository;
 
 namespace VisaApplicationSystem.Controllers
-{
+{   
     public class LoginController : Controller
     {
         // GET: Login
@@ -21,16 +21,13 @@ namespace VisaApplicationSystem.Controllers
         {
             try
             {
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
-                Response.Cache.SetNoStore();
+                ClearAll();
                 return View();
-
             }
             catch (Exception ex)
             {
                 LogError(ex);
-                return View("Error");
+                return View();
             }
         }
         /// <summary>
@@ -46,7 +43,7 @@ namespace VisaApplicationSystem.Controllers
                 LoginRepository loginRepository = new LoginRepository();
                 Registration registration = loginRepository.GetLogin(login);
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("Admin") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     Console.WriteLine("User ID: " + userId);
                 }
@@ -54,25 +51,32 @@ namespace VisaApplicationSystem.Controllers
                 {
                     if (registration.isVerified)
                     {
-                        if (registration.role.Equals("Admin"))
+                        if (registration.role.Equals("Admin") && registration.roleBase.Equals(RoleBase.Admin))
                         {
-                            ViewBag.registrationID = registration.registrationID;
                             FormsAuthentication.SetAuthCookie(login.userName, false);
                             return RedirectToAction("IndexHome", "Admin");
                         }
-                        else if (registration.role.Equals("VCO"))
+                        else if (registration.roleBase.Equals(RoleBase.VCO))
                         {
-                            ViewBag.registrationID = registration.registrationID;
                             FormsAuthentication.SetAuthCookie(login.userName, false);
 
                             return RedirectToAction("Index", "VCO");
                         }
-                        else if (registration.role.Equals("User"))
+                        else if (registration.roleBase.Equals(RoleBase.User))
                         {
-                            ViewBag.registrationID = registration.registrationID;
                             FormsAuthentication.SetAuthCookie(login.userName, false);
                             return RedirectToAction("UserIndex", "User");
                         }
+                        else
+                        {
+                            // Registration is not verified, so set an error message in ViewBag.
+                            ViewBag.ErrorMessage = "Your registration is not verified. Please verify your registration.";
+                        }
+                    }
+                    else
+                    {
+                        // Handle the case where no registration is found (e.g., invalid login credentials).
+                        ViewBag.ErrorMessage = "Invalid login credentials. Please try again.";
                     }
                 }
                 return View();
@@ -116,6 +120,7 @@ namespace VisaApplicationSystem.Controllers
                 Console.WriteLine(registration.address);
                 AdminRepository adminRepository = new AdminRepository();
                 registration.role = "User";
+                registration.roleBase = RoleBase.User;
                 registration.salt = adminRepository.GenerateRandomSalt();
                 registration.passwordHash = adminRepository.HashPassword(registration.password, registration.salt);
                 adminRepository.InsertRegistration(registration);
@@ -128,6 +133,17 @@ namespace VisaApplicationSystem.Controllers
                 return View("Error");
             }
             
+        }
+        //clear all cache file auth cookies
+        public void ClearAll()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
         }
         //error log file
         private void LogError(Exception ex)

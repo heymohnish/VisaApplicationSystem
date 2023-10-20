@@ -11,6 +11,11 @@ namespace VisaApplicationSystem.Repository
 {
     public class VCORepository : BaseDatabaseConnection
     {
+        /// <summary>
+        /// Retrieves a list of submitted application forms from the database.
+        /// </summary>
+        /// <returns>A list of ApplicationForm objects representing the submitted applications.</returns>
+
         public List<ApplicationForm> GetSubmitedApplication()
         {
             List<ApplicationForm> applications = new List<ApplicationForm>();
@@ -41,18 +46,18 @@ namespace VisaApplicationSystem.Repository
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
+            return applications;
             }
             finally
             {
                 connection.Close();
             }
 
-            return applications;
         }
+        /// <summary>
+        /// Retrieves a list of all application forms from the database.
+        /// </summary>
+        /// <returns>A list of ApplicationForm objects representing all the applications.</returns>
         public List<ApplicationForm> GetAllApplication()
         {
             List<ApplicationForm> applications = new List<ApplicationForm>();
@@ -83,18 +88,19 @@ namespace VisaApplicationSystem.Repository
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions here
+            return applications;
             }
             finally
             {
                 connection.Close();
             }
 
-            return applications;
         }
+        /// <summary>
+        /// Retrieves an application form with the specified ID from the database.
+        /// </summary>
+        /// <param name="id">The ID of the application form to retrieve.</param>
+        /// <returns>An ApplicationPayload object representing the requested application form.</returns>
         public ApplicationPayload GetApplicationForm(int id)
         {
             ApplicationPayload application = null;
@@ -156,29 +162,23 @@ namespace VisaApplicationSystem.Repository
                                 isVisitorProof = reader.GetBoolean(reader.GetOrdinal("IsVisitorProof")),
                                 statusCast = reader.GetInt32(reader.GetOrdinal("Status")),
 
-                                /*messageVCO = reader.GetString(reader.GetOrdinal("MessageVCO")),
-                                messageUser = reader.GetString(reader.GetOrdinal("MessageUser"))*/
-
                             };
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions here
-                Console.WriteLine($"Error: {ex.Message}");
+                application.status = (Status)application.statusCast;
+                return application;
             }
             finally
             {
                     connection.Close();
             }
-            application.status = (Status)application.statusCast;
-            Console.WriteLine(application.statusCast);
 
-            return application;
         }
-
+        /// <summary>
+        /// Updates the status and associated message for an application in the database.
+        /// </summary>
+        /// <param name="application">An ApplicationPayload object containing the application information to be updated.</param>
         public void UpdateStatus(ApplicationPayload application)
         {
             try
@@ -194,10 +194,6 @@ namespace VisaApplicationSystem.Repository
                     command.Parameters.AddWithValue("@MessageUser", application.messageUser);
                     command.ExecuteReader();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
             }
             finally
             {

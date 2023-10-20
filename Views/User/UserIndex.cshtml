@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <h1>Welcome User</h1>
+        <h1>Welcome @(Session["UserName"] != null ? Session["UserName"].ToString() : "No value")</h1>
     </header>
     <div id="main-content">
         <img src="~/Content/Image/Home/pexels-aksonsat-uanthoeng-1078850.jpg" alt="A beautiful image" />

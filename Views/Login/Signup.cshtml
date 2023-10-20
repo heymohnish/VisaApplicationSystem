@@ -11,48 +11,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ce19876732.js" crossorigin="anonymous"></script>
     <link href="~/Content/CustomCSS/SignUp.css" rel="stylesheet" />
+    <link href="~/Content/CustomCSS/SignUpC.css" rel="stylesheet" />
     <script>
-      function onBlurEmail12() {
-        var emailInput = document.getElementById("email");
-        var errorEmail = document.getElementById("errorMail");
-        var emailValue = emailInput.value;
+        function onBlurEmail12() {
+            var emailInput = document.getElementById("email");
+            var errorEmail = document.getElementById("errorMail");
+            var emailValue = emailInput.value;
 
-        // Regular expression for email validation
-        var emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            // Regular expression for email validation
+            var emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-        if (emailValue === "") {
-            errorEmail.innerHTML = "Email is required.";
-        } else if (!emailPattern.test(emailValue)) {
-            errorEmail.innerHTML = "Invalid email format.";
-        } else {
-            errorEmail.innerHTML = ""; // Clear any previous error message.
+            if (emailValue === "") {
+                errorEmail.innerHTML = "Email is required.";
+            } else if (!emailPattern.test(emailValue)) {
+                errorEmail.innerHTML = "Invalid email format.";
+            } else {
+                errorEmail.innerHTML = ""; // Clear any previous error message.
+            }
         }
-}
     </script>
 </head>
-<style>
-    input[type="submit"] {
-        background-color: #e00909;
-        color: white;
-        width: 300px;
-        border-radius: 10px;
-        border-color: white;
-        padding: 5px 75px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        /* Green */
-    }
 
-        input[type="submit"]:hover {
-            background-color: rgb(182, 0, 0);
-            color: white;
-        }
-</style>
 <body>
     <div class="center-fieldset">
         <div id="para2">

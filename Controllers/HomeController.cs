@@ -80,7 +80,7 @@ namespace VisaApplicationSystem.Controllers
             {
                 AdminRepository adminRepository = new AdminRepository();
                 adminRepository.CreateContactMessage(contact);
-
+                ViewBag.SuccessMessage = "Your message has been successfully sent.";
                 return View();
 
             }

@@ -7,11 +7,18 @@ using System.Web;
 using VisaApplicationSystem.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Routing;
 
 namespace VisaApplicationSystem.Repository
 {
     public class LoginRepository :BaseDatabaseConnection
     {
+        /// <summary>
+        /// Retrieves registration information based on a user's login credentials.
+        /// </summary>
+        /// <param name="login">The login credentials (username and password).</param>
+        /// <returns>A Registration object containing user information if login is successful; otherwise, an empty Registration object.</returns>
+
         public Registration GetLogin(Login login)
         {
             InitializeConnection();
@@ -29,6 +36,7 @@ namespace VisaApplicationSystem.Repository
                     registration = new Registration
                     {
                         registrationID = (int)reader["RegistrationID"],
+                        roleBase = (RoleBase)reader["RoleBase"],
                         firstName = reader["FirstName"].ToString(),
                         lastName = reader.GetString(reader.GetOrdinal("LastName")),
                         dob = reader.GetDateTime(reader.GetOrdinal("DateOfBirth")),
@@ -43,7 +51,7 @@ namespace VisaApplicationSystem.Repository
                         country = reader.GetString(reader.GetOrdinal("Country")),
                         userName = reader.GetString(reader.GetOrdinal("UserName")),
                         passwordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
-                        salt = reader.GetString(reader.GetOrdinal("Salt"))
+                        salt = reader.GetString(reader.GetOrdinal("Salt")),
                     };
                         
                     if (!reader.IsDBNull(reader.GetOrdinal("Photo")))
@@ -64,6 +72,7 @@ namespace VisaApplicationSystem.Repository
                 bool isPasswordCorrect = VerifyPassword(login.password, registration.salt, registration.passwordHash);
                 HttpContext.Current.Session["LoginId"] = registration.registrationID;
                 HttpContext.Current.Session["UserName"] = registration.userName;
+                HttpContext.Current.Session["Role"] = registration.role;
                 if (isPasswordCorrect)
                 {
                     registration.isVerified = true;
@@ -74,31 +83,15 @@ namespace VisaApplicationSystem.Repository
                     registration.isVerified = false;
                 }
                 reader.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                return registration;
             }
             finally
             {
                 connection.Close();
             }
-            return registration;
+            
         }
-        public static bool VerifyPassword(string enteredPassword, string storedSalt, string storedHashedPassword)
-        {
-            string hashedPasswordToCompare = HashPassword(enteredPassword, storedSalt);
-            return hashedPasswordToCompare == storedHashedPassword;
-        }
-        public static string HashPassword(string password, string salt)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                byte[] saltedPasswordBytes = Encoding.UTF8.GetBytes(password + salt);
-                byte[] hashedBytes = sha256.ComputeHash(saltedPasswordBytes);
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
+        
 
         public void UploadImage(int registrationID, byte[] imageData)
         {
@@ -117,7 +110,10 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// Resets a user's password by updating the hashed password and salt in the database.
+        /// </summary>
+        /// <param name="forgotPassword">A data structure containing user email, username, and the new password.</param>
         public void ForgetPassword(ForgotPassword forgotPassword)
         {
             InitializeConnection();
@@ -140,5 +136,39 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Verifies if the entered password matches a stored hashed password using the provided salt.
+        /// </summary>
+        /// <param name="enteredPassword">The password entered by the user for verification.</param>
+        /// <param name="storedSalt">The salt used to hash the stored password.</param>
+        /// <param name="storedHashedPassword">The stored hashed password to compare against.</param>
+        /// <returns>True if the entered password matches the stored password; otherwise, false.</returns>
+
+        public static bool VerifyPassword(string enteredPassword, string storedSalt, string storedHashedPassword)
+        {
+            string hashedPasswordToCompare = HashPassword(enteredPassword, storedSalt);
+            return hashedPasswordToCompare == storedHashedPassword;
+        }
+        /// <summary>
+        /// Hashes a password with a provided salt using the SHA-256 algorithm.
+        /// </summary>
+        /// <param name="password">The password to hash.</param>
+        /// <param name="salt">The salt to use in the hashing process.</param>
+        /// <returns>The base64-encoded hashed password.</returns>
+        public static string HashPassword(string password, string salt)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] saltedPasswordBytes = Encoding.UTF8.GetBytes(password + salt);
+                byte[] hashedBytes = sha256.ComputeHash(saltedPasswordBytes);
+                return Convert.ToBase64String(hashedBytes);
+            }
+        }
+        /// <summary>
+        /// Uploads an image associated with a user's registration to the database.
+        /// </summary>
+        /// <param name="registrationID">The ID of the user's registration.</param>
+        /// <param name="imageData">The binary image data to upload.</param>
+
     }
 }

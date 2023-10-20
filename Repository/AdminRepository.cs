@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Web;
 using VisaApplicationSystem.Models;
 using System.Security.Cryptography;
 using System.Text;
-using System.Diagnostics.Contracts;
-using System.Web.UI.WebControls;
 
 namespace VisaApplicationSystem.Repository
 {
     public class AdminRepository : BaseDatabaseConnection
     {
+        /// <summary>
+        /// Inserts a new Visa type into the database.
+        /// </summary>
+        /// <param name="visa">The Visa object containing information to be inserted.</param>
+        /// <returns>Returns true if the insertion is successful; otherwise, false.</returns>
+        /// <exception cref="Exception">Throws an Exception if there is an error during the insertion process.</exception>
         public bool InsertVisaType(Visa visa)
         {
             InitializeConnection();
@@ -54,7 +56,11 @@ namespace VisaApplicationSystem.Repository
             }
             return ret;
         }
-
+        /// <summary>
+        /// Retrieves a list of all Visa types from the database.
+        /// </summary>
+        /// <returns>Returns a list of Visa objects representing all Visa types.</returns>
+        /// <exception cref="Exception">Throws an Exception if there is an error during the retrieval process.</exception>
         public List<Visa> GetAllVisaTypes()
         {
             List<Visa> visaList = new List<Visa>();
@@ -107,6 +113,11 @@ namespace VisaApplicationSystem.Repository
             
         }
 
+        /// <summary>
+        /// Retrieves a specific Visa type from the database based on the provided ID.
+        /// </summary>
+        /// <param name="id">The ID of the Visa type to retrieve.</param>
+        /// <returns>Returns a Visa object representing the specified Visa type if found; otherwise, null.</returns>
 
         public Visa GetVisaType(int id)
         {
@@ -155,6 +166,10 @@ namespace VisaApplicationSystem.Repository
 
             
         }
+        /// <summary>
+        /// Updates the information of a specific Visa type in the database based on the provided Visa object.
+        /// </summary>
+        /// <param name="visa">The Visa object containing updated information.</param>
 
         public void UpdateVisaType(Visa visa)
         {
@@ -191,6 +206,11 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Deletes a specific Visa type from the database based on the provided Visa ID.
+        /// </summary>
+        /// <param name="visaID">The ID of the Visa type to be deleted.</param>
+
 
         public void DeleteVisaType(int visaID)
         {
@@ -212,7 +232,11 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// Retrieves a list of user registrations with a specific role from the database.
+        /// </summary>
+        /// <param name="role">The role for which to retrieve user registrations.</param>
+        /// <returns>Returns a list of Registration objects representing users with the specified role.</returns>
         public List<Registration> GetAllByRole(string role)
         {
             List<Registration> adminList = new List<Registration>();
@@ -267,6 +291,11 @@ namespace VisaApplicationSystem.Repository
 
            
         }
+        /// <summary>
+        /// Deletes a user registration from the database based on the provided user ID.
+        /// </summary>
+        /// <param name="id">The ID of the user registration to be deleted.</param>
+
         public void DeleteByID(int id)
         {
             try
@@ -286,6 +315,12 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Inserts a new user registration into the database based on the provided Registration object.
+        /// </summary>
+        /// <param name="registration">The Registration object containing information to be inserted.</param>
+        /// <returns>Returns true if the insertion is successful; otherwise, false.</returns>
+
         public bool InsertRegistration(Registration registration)
         {
             try
@@ -314,16 +349,9 @@ namespace VisaApplicationSystem.Repository
                         command.Parameters.AddWithValue("@UserName", registration.userName);
                         command.Parameters.AddWithValue("@PasswordHash", registration.passwordHash);
                         command.Parameters.AddWithValue("@Salt", registration.salt);
+                        command.Parameters.AddWithValue("@RoleBase", registration.roleBase);
 
-                        // Handle Photo (may be NULL)
-                        /*if (registration.photo != null)
-                        {
-                            command.Parameters.AddWithValue("@Photo", registration.photo);
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@Photo", DBNull.Value);
-                        }*/
+                        
 
                         // Handle AdminID (may be NULL)
                         if (registration.adminID != null)
@@ -346,7 +374,12 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
-        //admin application
+        /// <summary>
+        /// Retrieves a list of application payloads with a specific status from the database.
+        /// </summary>
+        /// <param name="status">The status of applications to filter by. Use 6 to retrieve all applications.</param>
+        /// <returns>Returns a list of ApplicationPayload objects representing applications that match the specified status.</returns>
+
         public List<ApplicationPayload> GetAllApplicationAdmin(int status)
         {
             List<ApplicationPayload> applications = new List<ApplicationPayload>();
@@ -395,6 +428,11 @@ namespace VisaApplicationSystem.Repository
 
             
         }
+        /// <summary>
+        /// Retrieves a list of contact information entries from the database.
+        /// </summary>
+        /// <returns>Returns a list of Contact objects representing contact information entries.</returns>
+
         public List<Contact> GetAllContact()
         {
             List<Contact> contacts = new List<Contact>();
@@ -432,6 +470,11 @@ namespace VisaApplicationSystem.Repository
             }
             
         }
+        /// <summary>
+        /// Deletes a contact information entry from the database based on the provided contact ID.
+        /// </summary>
+        /// <param name="id">The ID of the contact information entry to be deleted.</param>
+
         public void DeleteContactUs(int id)
         {
             try
@@ -453,6 +496,11 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Creates a new contact message entry in the database based on the provided Contact object.
+        /// </summary>
+        /// <param name="contact">The Contact object containing the message information to be inserted.</param>
+
         public void CreateContactMessage(Contact contact)
         {
 
@@ -475,6 +523,11 @@ namespace VisaApplicationSystem.Repository
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Generates a random cryptographic salt for use in password hashing.
+        /// </summary>
+        /// <returns>Returns a random salt as a Base64-encoded string.</returns>
+
         public string GenerateRandomSalt()
         {
             using (var rng = new RNGCryptoServiceProvider())
@@ -484,6 +537,13 @@ namespace VisaApplicationSystem.Repository
                 return Convert.ToBase64String(saltBytes);
             }
         }
+        /// <summary>
+        /// Computes a hash of the provided password combined with the provided salt using the SHA-256 hashing algorithm.
+        /// </summary>
+        /// <param name="password">The password to be hashed.</param>
+        /// <param name="salt">The salt used in the hashing process.</param>
+        /// <returns>Returns the hashed password as a Base64-encoded string.</returns>
+
         public string HashPassword(string password, string salt)
         {
             using (var sha256 = SHA256.Create())
@@ -498,6 +558,11 @@ namespace VisaApplicationSystem.Repository
                 return Convert.ToBase64String(hashedBytes);
             }
         }
+        /// <summary>
+        /// Retrieves a user's profile information from the database based on the provided user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user whose profile information is to be retrieved.</param>
+        /// <returns>Returns a Registration object containing the user's profile information if found; otherwise, an empty Registration object.</returns>
 
         public Registration GetProfileById(int userId)
         {
@@ -516,7 +581,7 @@ namespace VisaApplicationSystem.Repository
                     registration = new Registration
                     {
                         registrationID = (int)reader["RegistrationID"],
-                        firstName = reader["FirstName"].ToString(),
+                        firstName = reader.GetString(reader.GetOrdinal("FirstName")),
                         lastName = reader.GetString(reader.GetOrdinal("LastName")),
                         dob = reader.GetDateTime(reader.GetOrdinal("DateOfBirth")),
                         age = reader.GetInt32(reader.GetOrdinal("Age")),
@@ -541,6 +606,7 @@ namespace VisaApplicationSystem.Repository
                 }
                 reader.Close();
                 return registration;
+
             }
             finally
             {
@@ -548,6 +614,11 @@ namespace VisaApplicationSystem.Repository
             }
             
         }
+
+        /// <summary>
+        /// Updates a user's profile information in the database based on the provided Registration object.
+        /// </summary>
+        /// <param name="registration">The Registration object containing updated profile information.</param>
 
         public void GetUpdateProfile(Registration registration)
         {

@@ -23,12 +23,13 @@ namespace VisaApplicationSystem.Controllers
             {
                 
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     return View();
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -51,7 +52,7 @@ namespace VisaApplicationSystem.Controllers
             {
                
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     VCORepository controller = new VCORepository();
 
@@ -65,6 +66,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
 
@@ -88,7 +90,7 @@ namespace VisaApplicationSystem.Controllers
             {
                 
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     VCORepository controller = new VCORepository();
 
@@ -96,6 +98,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
 
@@ -119,14 +122,15 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     VCORepository repository = new VCORepository();
-                ApplicationPayload application = repository.GetApplicationForm(id);
-                return View(application);
+                    ApplicationPayload application = repository.GetApplicationForm(id);
+                    return View(application);
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
         }
@@ -150,14 +154,15 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     VCORepository repository = new VCORepository();
-                repository.UpdateStatus(application);
-                return RedirectToAction("Update");
+                    repository.UpdateStatus(application);
+                    return RedirectToAction("Update");
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             
@@ -204,13 +209,14 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
 
                     return View();
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -233,7 +239,7 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     login.userName = Session["UserName"].ToString();
                     LoginRepository loginRepository = new LoginRepository();
@@ -244,12 +250,14 @@ namespace VisaApplicationSystem.Controllers
                     }
                     else
                     {
+
                         return View();
                     }
 
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -271,12 +279,13 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     return View();
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
 
@@ -300,7 +309,7 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     if (password != null && password.newPassword != null && password.conformPassword != null)
                     {
@@ -313,6 +322,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
 
@@ -363,7 +373,7 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     AdminRepository adminRepository = new AdminRepository();
                     Registration registration = adminRepository.GetProfileById(userId);
@@ -373,6 +383,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -394,7 +405,7 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     registration.registrationID = userId;
                     AdminRepository adminRepository = new AdminRepository();
@@ -403,6 +414,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -425,7 +437,7 @@ namespace VisaApplicationSystem.Controllers
             try
             {
                 int userId;
-                if (HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
+                if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].Equals("VCO") && HttpContext.Session["LoginId"] != null && int.TryParse(HttpContext.Session["LoginId"].ToString(), out userId))
                 {
                     byte[] imageData;
                     using (var binaryReader = new BinaryReader(file.InputStream))
@@ -439,6 +451,7 @@ namespace VisaApplicationSystem.Controllers
                 }
                 else
                 {
+                    ClearAll();
                     return RedirectToAction("SessionTimeOut", "Session");
                 }
             }
@@ -459,6 +472,17 @@ namespace VisaApplicationSystem.Controllers
                 writer.WriteLine($"Stack Trace: {ex.StackTrace}");
                 writer.WriteLine();
             }
+        }
+        //clear all cache file auth cookies
+        public void ClearAll()
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+            Response.Cache.SetNoStore();
+            FormsAuthentication.SignOut();
+            HttpContext.Session.Clear();
+            HttpContext.Session.Abandon();
+            HttpContext.Session.RemoveAll();
         }
     }
 }
